@@ -1,0 +1,17 @@
+{
+  "goerli": {
+    "nftprotect": {
+      "address": "0xdccFE315E42c05c8699F3AC046b0A2F3115f4B02",
+      "startBlock": 8973575
+    },
+    "nftpcoupons": {
+      "address": "0x03d8899BDad1F05F28373f04F05a0A9dC6BDad64"
+    },
+    "userregistry": {
+      "address": "0xE2E809F3Aec329B8Af5482eB3B1AD6A90510e808"
+    },
+    "arbitratorregistry": {
+      "address": "0x6b61f0a88C4A2CfeF2b9f948093C95531a6B9F04"
+    }
+  }
+}

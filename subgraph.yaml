@@ -1,0 +1,199 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: nftprotect
+    network: goerli
+    source:
+      address: "0xdccFE315E42c05c8699F3AC046b0A2F3115f4B02"
+      abi: nftprotect
+      startBlock: 8973575
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - ArbitratorRegistryChanged
+        - BaseChanged
+        - BurnArbitrateAsked
+        - BurnOnActionChanged
+        - Deployed
+        - FeeChanged
+        - MetaEvidenceLoaderChanged
+        - OwnershipAdjusted
+        - OwnershipAdjustmentAnswered
+        - OwnershipAdjustmentArbitrateAsked
+        - OwnershipAdjustmentAsked
+        - OwnershipRestoreAnswered
+        - OwnershipRestoreAsked
+        - OwnershipTransferred
+        - Protected
+        - ScoreThresholdChanged
+        - Transfer
+        - Unprotected
+        - UserRegistryChanged
+      abis:
+        - name: nftprotect
+          file: ./abis/nftprotect.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: ArbitratorRegistryChanged(address)
+          handler: handleArbitratorRegistryChanged
+        - event: BaseChanged(string)
+          handler: handleBaseChanged
+        - event: BurnArbitrateAsked(indexed uint256,address,indexed uint256)
+          handler: handleBurnArbitrateAsked
+        - event: BurnOnActionChanged(bool)
+          handler: handleBurnOnActionChanged
+        - event: Deployed()
+          handler: handleDeployed
+        - event: FeeChanged(indexed uint8,uint256)
+          handler: handleFeeChanged
+        - event: MetaEvidenceLoaderChanged(address)
+          handler: handleMetaEvidenceLoaderChanged
+        - event: OwnershipAdjusted(indexed address,indexed address,indexed uint256)
+          handler: handleOwnershipAdjusted
+        - event: OwnershipAdjustmentAnswered(indexed uint256,bool)
+          handler: handleOwnershipAdjustmentAnswered
+        - event: OwnershipAdjustmentArbitrateAsked(indexed uint256,address,indexed uint256)
+          handler: handleOwnershipAdjustmentArbitrateAsked
+        - event: OwnershipAdjustmentAsked(indexed uint256,indexed address,indexed address,uint256)
+          handler: handleOwnershipAdjustmentAsked
+        - event: OwnershipRestoreAnswered(indexed uint256,bool)
+          handler: handleOwnershipRestoreAnswered
+        - event: OwnershipRestoreAsked(indexed uint256,indexed address,indexed address,uint256)
+          handler: handleOwnershipRestoreAsked
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Protected(indexed uint256,indexed address,address,uint256,indexed
+            uint256,uint256,uint8)
+          handler: handleProtected
+        - event: ScoreThresholdChanged(uint256)
+          handler: handleScoreThresholdChanged
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Unprotected(indexed address,indexed uint256)
+          handler: handleUnprotected
+        - event: UserRegistryChanged(address)
+          handler: handleUserRegistryChanged
+      file: ./src/nftprotect.ts
+  - kind: ethereum
+    name: nftpcoupons
+    network: goerli
+    source:
+      address: "0x03d8899BDad1F05F28373f04F05a0A9dC6BDad64"
+      abi: nftpcoupons
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - nftpcouponsApproval
+        - nftpcouponsDeployed
+        - nftpcouponsOwnershipTransferred
+        - nftpcouponsTransfer
+        - TransferrableSet
+      abis:
+        - name: nftpcoupons
+          file: ./abis/nftpcoupons.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Deployed()
+          handler: handleDeployed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: TransferrableSet(bool)
+          handler: handleTransferrableSet
+      file: ./src/nftpcoupons.ts
+  - kind: ethereum
+    name: userregistry
+    network: goerli
+    source:
+      address: "0xE2E809F3Aec329B8Af5482eB3B1AD6A90510e808"
+      abi: userregistry
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AffiliatePayment
+        - AffiliatePercentChanged
+        - userregistryArbitratorRegistryChanged
+        - DIDRegistered
+        - DIDUnregistered
+        - userregistryDeployed
+        - userregistryOwnershipTransferred
+        - PartnerSet
+        - ReferrerSet
+        - SuccessorApproved
+        - SuccessorRejected
+        - SuccessorRequested
+      abis:
+        - name: userregistry
+          file: ./abis/userregistry.json
+      eventHandlers:
+        - event: AffiliatePayment(indexed address,indexed address,uint256)
+          handler: handleAffiliatePayment
+        - event: AffiliatePercentChanged(uint256)
+          handler: handleAffiliatePercentChanged
+        - event: ArbitratorRegistryChanged(address)
+          handler: handleArbitratorRegistryChanged
+        - event: DIDRegistered(indexed address,string)
+          handler: handleDIDRegistered
+        - event: DIDUnregistered(indexed address)
+          handler: handleDIDUnregistered
+        - event: Deployed()
+          handler: handleDeployed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PartnerSet(indexed address,uint256)
+          handler: handlePartnerSet
+        - event: ReferrerSet(indexed address,indexed address)
+          handler: handleReferrerSet
+        - event: SuccessorApproved(indexed uint256)
+          handler: handleSuccessorApproved
+        - event: SuccessorRejected(indexed uint256)
+          handler: handleSuccessorRejected
+        - event: SuccessorRequested(indexed uint256,indexed address,indexed address)
+          handler: handleSuccessorRequested
+      file: ./src/userregistry.ts
+  - kind: ethereum
+    name: arbitratorregistry
+    network: goerli
+    source:
+      address: "0x6b61f0a88C4A2CfeF2b9f948093C95531a6B9F04"
+      abi: arbitratorregistry
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ArbitratorAdded
+        - ArbitratorDeleted
+        - arbitratorregistryDeployed
+        - ExtraDataChanged
+        - arbitratorregistryOwnershipTransferred
+      abis:
+        - name: arbitratorregistry
+          file: ./abis/arbitratorregistry.json
+      eventHandlers:
+        - event: ArbitratorAdded(indexed uint256,string,address,bytes)
+          handler: handleArbitratorAdded
+        - event: ArbitratorDeleted(indexed uint256)
+          handler: handleArbitratorDeleted
+        - event: Deployed()
+          handler: handleDeployed
+        - event: ExtraDataChanged(indexed uint256,bytes)
+          handler: handleExtraDataChanged
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: ./src/arbitratorregistry.ts
