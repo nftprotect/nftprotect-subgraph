@@ -89,6 +89,7 @@ dataSources:
     source:
       address: "0x03d8899BDad1F05F28373f04F05a0A9dC6BDad64"
       abi: nftpcoupons
+      startBlock: 8973593
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -120,6 +121,7 @@ dataSources:
     source:
       address: "0xE2E809F3Aec329B8Af5482eB3B1AD6A90510e808"
       abi: userregistry
+      startBlock: 8973593
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -172,6 +174,7 @@ dataSources:
     source:
       address: "0x6b61f0a88C4A2CfeF2b9f948093C95531a6B9F04"
       abi: arbitratorregistry
+      startBlock: 8899287
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
