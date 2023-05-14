@@ -1,5 +1,12 @@
 import
 {
+    BigInt,
+    Address,
+    store
+} from "@graphprotocol/graph-ts"
+
+import
+{
     Approval as ApprovalEvent,
     ApprovalForAll as ApprovalForAllEvent,
     ArbitratorRegistryChanged as ArbitratorRegistryChangedEvent,
@@ -25,13 +32,19 @@ import
 
 import
 {
-    System
+    System,
+    Token
 } from "../generated/schema"
 
 import
 {
     loadSystem
 } from "./system"
+
+import
+{
+    loadUser
+} from "./user"
 
 
 export function handleApproval(event: ApprovalEvent): void
@@ -129,7 +142,15 @@ export function handleOwnershipTransferred(event: OwnershipTransferredEvent): vo
 
 export function handleProtected(event: ProtectedEvent): void
 {
-    // TODO
+    let t = new Token(event.params.tokenId.toString());
+    t.securityLevel = BigInt.fromI32(event.params.level);
+    t.ownerOriginal = loadUser(event.params.owner).id;
+    t.ownerProtected = t.ownerOriginal;
+    t.assetType = event.params.assetType;
+    t.contract = event.params.contr;
+    t.tokenId = event.params.tokenIdOrig;
+    t.amount = event.params.amount;
+    t.save();
 }
 
 export function handleScoreThresholdChanged(event: ScoreThresholdChangedEvent): void
@@ -141,12 +162,17 @@ export function handleScoreThresholdChanged(event: ScoreThresholdChangedEvent): 
 
 export function handleTransfer(event: TransferEvent): void
 {
-    // TODO
+    if (event.params.to != Address.fromString("0x0000000000000000000000000000000000000000"))
+    {
+        const t = Token.load(event.params.tokenId.toString()) as Token;
+        t.ownerProtected = loadUser(event.params.to).id;
+        t.save();
+    }
 }
 
 export function handleUnprotected(event: UnprotectedEvent): void
 {
-    // TODO
+    store.remove("Token", event.params.tokenId.toString());
 }
 
 export function handleUserRegistryChanged(event: UserRegistryChangedEvent): void

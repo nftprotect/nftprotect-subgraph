@@ -42,6 +42,20 @@ type User @entity
     referrer: Bytes
     successor: Bytes
     coupons: BigInt!
+    tokensProtected: [Token!] @derivedFrom(field: "ownerProtected")
+    tokensOriginal: [Token!] @derivedFrom(field: "ownerOriginal")
+}
+
+type Token @entity
+{
+    id: ID!
+    securityLevel: BigInt!
+    ownerProtected: User!
+    ownerOriginal: User!
+    assetType: BigInt!
+    contract: Bytes!
+    tokenId: BigInt
+    amount: BigInt
 }
 
 enum Status
