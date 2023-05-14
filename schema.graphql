@@ -13,6 +13,7 @@ type System @entity
     burnOnAction: Boolean
     base: String
     scoreThreshold: BigInt
+    affiliatePercent: BigInt
 }
 
 type Arbitrator @entity
@@ -21,4 +22,22 @@ type Arbitrator @entity
     name: String!
     address: Bytes!
     extraData: Bytes!
+}
+
+type Partner @entity
+{
+    id: ID!
+    percent: BigInt!
+}
+
+type DID @entity
+{
+    id: ID!
+    provider: String!
+}
+
+type User @entity
+{
+    id: ID!
+    referrer: Bytes
 }

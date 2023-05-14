@@ -1,5 +1,10 @@
 import
 {
+  store
+} from "@graphprotocol/graph-ts"
+
+import
+{
     AffiliatePayment as AffiliatePaymentEvent,
     AffiliatePercentChanged as AffiliatePercentChangedEvent,
     ArbitratorRegistryChanged as ArbitratorRegistryChangedEvent,
@@ -16,7 +21,9 @@ import
 
 import
 {
-    System
+    System,
+    Partner,
+    DID
 } from "../generated/schema"
 
 import
@@ -24,51 +31,76 @@ import
     loadSystem
 } from "./system"
 
+import
+{
+    loadUser
+} from "./user"
+
 
 export function handleAffiliatePayment(event: AffiliatePaymentEvent): void
 {
+    // do nothing
 }
 
 export function handleAffiliatePercentChanged(event: AffiliatePercentChangedEvent): void
 {
+    const s = loadSystem("userregistry");
+    s.affiliatePercent = event.params.percent;
+    s.save();
 }
 
 export function handleArbitratorRegistryChanged(event: ArbitratorRegistryChangedEvent): void
 {
+    // do nothing
 }
 
 export function handleDIDRegistered(event: DIDRegisteredEvent): void
 {
+    let d = new DID(event.params.did.toHex().toString());
+    d.provider = event.params.provider;
+    d.save();
 }
 
 export function handleDIDUnregistered(event: DIDUnregisteredEvent): void
 {
+    store.remove("DID", event.params.did.toHex().toString());
 }
 
 export function handleDeployed(event: DeployedEvent): void
 {
+    const s = loadSystem("userregistry");
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void
 {
+    // do nothing
 }
 
 export function handlePartnerSet(event: PartnerSetEvent): void
 {
+    let p = new Partner(event.params.partnet.toHex().toString());
+    p.percent = event.params.percent;
+    p.save();
 }
 
 export function handleReferrerSet(event: ReferrerSetEvent): void
 {
+    let u = loadUser(event.params.user);
+    u.referrer = event.params.referrer;
+    u.save();
 }
 
 export function handleSuccessorApproved(event: SuccessorApprovedEvent): void
 {
+    // TODO
 }
 
 export function handleSuccessorRejected(event: SuccessorRejectedEvent): void
 {
+    // TODO
 }
 
 export function handleSuccessorRequested(event: SuccessorRequestedEvent): void
 {
+    // TODO
 }
