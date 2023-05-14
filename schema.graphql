@@ -40,4 +40,5 @@ type User @entity
 {
     id: ID!
     referrer: Bytes
+    coupons: BigInt!
 }

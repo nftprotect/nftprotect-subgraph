@@ -1,6 +1,7 @@
 import
 {
-    Bytes
+    Bytes,
+    BigInt
 } from "@graphprotocol/graph-ts"
 
 import
@@ -15,6 +16,7 @@ export function loadUser(user: Bytes): User
     if (!u)
     {
         u = new User(user.toHex().toString());
+        u.coupons = BigInt.fromI32(0);
         u.save();
     }
     return u as User;
