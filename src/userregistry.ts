@@ -23,7 +23,8 @@ import
 {
     System,
     Partner,
-    DID
+    DID,
+    SuccessorRequest
 } from "../generated/schema"
 
 import
@@ -92,15 +93,27 @@ export function handleReferrerSet(event: ReferrerSetEvent): void
 
 export function handleSuccessorApproved(event: SuccessorApprovedEvent): void
 {
-    // TODO
+    let r = SuccessorRequest.load(event.params.requestId.toString()) as SuccessorRequest;
+    r.status = "Rejected";
+    r.save();
+
+    let u = loadUser(r.user);
+    u.successor = r.successor;
+    u.save();
 }
 
 export function handleSuccessorRejected(event: SuccessorRejectedEvent): void
 {
-    // TODO
+    let r = SuccessorRequest.load(event.params.requestId.toString()) as SuccessorRequest;
+    r.status = "Rejected";
+    r.save();
 }
 
 export function handleSuccessorRequested(event: SuccessorRequestedEvent): void
 {
-    // TODO
+    let r = new SuccessorRequest(event.params.requestId.toString());
+    r.user = event.params.user;
+    r.successor = event.params.successor;
+    r.status = "InDispute";
+    r.save();
 }

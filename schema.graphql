@@ -40,5 +40,21 @@ type User @entity
 {
     id: ID!
     referrer: Bytes
+    successor: Bytes
     coupons: BigInt!
+}
+
+enum Status
+{
+    InDispute,
+    Accepted,
+    Rejected
+}
+
+type SuccessorRequest @entity
+{
+    id: ID!
+    status: Status!
+    user: Bytes!
+    successor: Bytes!
 }
