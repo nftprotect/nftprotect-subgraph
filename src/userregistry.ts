@@ -1,6 +1,6 @@
 import
 {
-  store
+    store
 } from "@graphprotocol/graph-ts"
 
 import
