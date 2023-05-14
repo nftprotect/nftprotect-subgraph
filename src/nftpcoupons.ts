@@ -12,6 +12,11 @@ import
     System
 } from "../generated/schema"
 
+import
+{
+    loadSystem
+} from "./system"
+
 
 export function handleApproval(event: ApprovalEvent): void
 {

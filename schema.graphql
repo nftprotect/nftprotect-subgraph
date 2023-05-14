@@ -9,3 +9,11 @@ type System @entity
     nftprotect: Bytes
     userregistry: Bytes
 }
+
+type Arbitrator @entity
+{
+    id: ID!
+    name: String!
+    address: Bytes!
+    extraData: Bytes!
+}

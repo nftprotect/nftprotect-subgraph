@@ -19,6 +19,11 @@ import
     System
 } from "../generated/schema"
 
+import
+{
+    loadSystem
+} from "./system"
+
 
 export function handleAffiliatePayment(event: AffiliatePaymentEvent): void
 {
