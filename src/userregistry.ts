@@ -94,7 +94,7 @@ export function handleReferrerSet(event: ReferrerSetEvent): void
 export function handleSuccessorApproved(event: SuccessorApprovedEvent): void
 {
     let r = SuccessorRequest.load(event.params.requestId.toString()) as SuccessorRequest;
-    r.status = "Rejected";
+    r.status = "Accepted";
     r.save();
 
     let u = loadUser(r.user);
