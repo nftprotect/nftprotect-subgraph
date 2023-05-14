@@ -36,18 +36,24 @@ import
 
 export function handleApproval(event: ApprovalEvent): void
 {
+    // do nothing
 }
 
 export function handleApprovalForAll(event: ApprovalForAllEvent): void
 {
+    // do nothing
 }
 
 export function handleArbitratorRegistryChanged(event: ArbitratorRegistryChangedEvent): void
 {
+    // do nothing
 }
 
 export function handleBaseChanged(event: BaseChangedEvent): void
 {
+    const s = loadSystem("nftprotect");
+    s.base = event.params.base;
+    s.save();
 }
 
 export function handleBurnArbitrateAsked(event: BurnArbitrateAskedEvent): void
@@ -60,14 +66,26 @@ export function handleBurnOnActionChanged(event: BurnOnActionChangedEvent): void
 
 export function handleDeployed(event: DeployedEvent): void
 {
+    const s = loadSystem("nftprotect");
 }
 
 export function handleFeeChanged(event: FeeChangedEvent): void
 {
+    const s = loadSystem("nftprotect");
+    if(event.params.level == 0)
+    {
+        s.feeBasic = event.params.feeWei;
+    }
+    else
+    {
+        s.feeUltra = event.params.feeWei;
+    }
+    s.save();
 }
 
 export function handleMetaEvidenceLoaderChanged(event: MetaEvidenceLoaderChangedEvent): void
 {
+    // do nothing
 }
 
 export function handleOwnershipAdjusted(event: OwnershipAdjustedEvent): void
@@ -96,6 +114,7 @@ export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): 
 
 export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void
 {
+    // do nothing
 }
 
 export function handleProtected(event: ProtectedEvent): void
@@ -104,6 +123,9 @@ export function handleProtected(event: ProtectedEvent): void
 
 export function handleScoreThresholdChanged(event: ScoreThresholdChangedEvent): void
 {
+    const s = loadSystem("nftprotect");
+    s.scoreThreshold = event.params.threshold;
+    s.save();
 }
 
 export function handleTransfer(event: TransferEvent): void
@@ -116,4 +138,5 @@ export function handleUnprotected(event: UnprotectedEvent): void
 
 export function handleUserRegistryChanged(event: UserRegistryChangedEvent): void
 {
+    // do nothing
 }

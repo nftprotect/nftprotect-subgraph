@@ -8,6 +8,11 @@ type System @entity
     nftpcoupons: Bytes
     nftprotect: Bytes
     userregistry: Bytes
+    feeBasic: BigInt
+    feeUltra: BigInt
+    burnOnAction: Boolean
+    base: String
+    scoreThreshold: BigInt
 }
 
 type Arbitrator @entity
