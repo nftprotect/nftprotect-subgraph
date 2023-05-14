@@ -58,10 +58,14 @@ export function handleBaseChanged(event: BaseChangedEvent): void
 
 export function handleBurnArbitrateAsked(event: BurnArbitrateAskedEvent): void
 {
+    // TODO
 }
 
 export function handleBurnOnActionChanged(event: BurnOnActionChangedEvent): void
 {
+    const s = loadSystem("nftprotect");
+    s.burnOnAction = event.params.boa;
+    s.save();
 }
 
 export function handleDeployed(event: DeployedEvent): void
@@ -90,26 +94,32 @@ export function handleMetaEvidenceLoaderChanged(event: MetaEvidenceLoaderChanged
 
 export function handleOwnershipAdjusted(event: OwnershipAdjustedEvent): void
 {
+    // TODO
 }
 
 export function handleOwnershipAdjustmentAnswered(event: OwnershipAdjustmentAnsweredEvent): void
 {
+    // TODO
 }
 
 export function handleOwnershipAdjustmentArbitrateAsked(event: OwnershipAdjustmentArbitrateAskedEvent): void
 {
+    // TODO
 }
 
 export function handleOwnershipAdjustmentAsked(event: OwnershipAdjustmentAskedEvent): void
 {
+    // TODO
 }
 
 export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEvent): void
 {
+    // TODO
 }
 
 export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): void
 {
+    // TODO
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void
@@ -119,6 +129,7 @@ export function handleOwnershipTransferred(event: OwnershipTransferredEvent): vo
 
 export function handleProtected(event: ProtectedEvent): void
 {
+    // TODO
 }
 
 export function handleScoreThresholdChanged(event: ScoreThresholdChangedEvent): void
@@ -130,10 +141,12 @@ export function handleScoreThresholdChanged(event: ScoreThresholdChangedEvent): 
 
 export function handleTransfer(event: TransferEvent): void
 {
+    // TODO
 }
 
 export function handleUnprotected(event: UnprotectedEvent): void
 {
+    // TODO
 }
 
 export function handleUserRegistryChanged(event: UserRegistryChangedEvent): void
