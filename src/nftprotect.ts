@@ -162,7 +162,8 @@ export function handleScoreThresholdChanged(event: ScoreThresholdChangedEvent): 
 
 export function handleTransfer(event: TransferEvent): void
 {
-    if (event.params.to != Address.fromString("0x0000000000000000000000000000000000000000"))
+    if (event.params.to != Address.fromString("0x0000000000000000000000000000000000000000") &&
+        event.params.from != Address.fromString("0x0000000000000000000000000000000000000000"))
     {
         const t = Token.load(event.params.tokenId.toString()) as Token;
         t.ownerProtected = loadUser(event.params.to).id;
