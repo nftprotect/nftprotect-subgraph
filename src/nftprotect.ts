@@ -33,7 +33,8 @@ import
 import
 {
     System,
-    Token
+    Token,
+    Request
 } from "../generated/schema"
 
 import
@@ -71,7 +72,13 @@ export function handleBaseChanged(event: BaseChangedEvent): void
 
 export function handleBurnArbitrateAsked(event: BurnArbitrateAskedEvent): void
 {
-    // TODO
+    let r = new Request(event.params.requestId.toString());
+    r.type = "Burn";
+    r.status = "Disputed";
+    r.token = event.params.tokenId.toString();
+    r.newowner = loadUser(event.params.dst).id;
+    r.save();
+    // TODO: need to understand how to change status, because there is no event for it
 }
 
 export function handleBurnOnActionChanged(event: BurnOnActionChangedEvent): void
@@ -107,32 +114,76 @@ export function handleMetaEvidenceLoaderChanged(event: MetaEvidenceLoaderChanged
 
 export function handleOwnershipAdjusted(event: OwnershipAdjustedEvent): void
 {
-    // TODO
+    let t = Token.load(event.params.tokenId.toString()) as Token;
+    t.ownerOriginal = loadUser(event.params.newowner).id;
+    t.save();
 }
 
 export function handleOwnershipAdjustmentAnswered(event: OwnershipAdjustmentAnsweredEvent): void
 {
-    // TODO
+    let r = Request.load(event.params.requestId.toString()) as Request;
+    r.status = event.params.accept ? "Accepted" : "Rejected";
+    r.save();
+    if(event.params.accept)
+    {
+        let t = Token.load(r.token) as Token;
+        t.ownerOriginal = r.newowner as String;
+        t.save();
+    }
 }
 
 export function handleOwnershipAdjustmentArbitrateAsked(event: OwnershipAdjustmentArbitrateAskedEvent): void
 {
-    // TODO
+    let r = Request.load(event.params.requestId.toString());
+    if (!r)
+    {
+        r = new Request(event.params.requestId.toString());
+        r.type = "OwnershipAdjustment";
+        r.token = event.params.tokenId.toString();
+        r.newowner = loadUser(event.params.dst).id;
+        r.oldowner = (Token.load(event.params.tokenId.toString()) as Token).ownerOriginal;
+    }
+    else
+    {
+        r = r as Request;
+    }
+    r.status = "Disputed";
+    r.save();
 }
 
 export function handleOwnershipAdjustmentAsked(event: OwnershipAdjustmentAskedEvent): void
 {
-    // TODO
+    let r = new Request(event.params.requestId.toString());
+    r.type = "OwnershipAdjustment";
+    r.status = "Initial";
+    r.token = event.params.tokenId.toString();
+    r.newowner = loadUser(event.params.newowner).id;
+    r.oldowner = loadUser(event.params.oldowner).id;
+    r.save();
 }
 
 export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEvent): void
 {
-    // TODO
+    let r = Request.load(event.params.requestId.toString()) as Request;
+    r.status = event.params.accept ? "Accepted" : "Rejected";
+    r.save();
+    if(event.params.accept)
+    {
+        let t = Token.load(r.token) as Token;
+        t.ownerProtected = r.newowner as String;
+        t.save();
+    }
 }
 
 export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): void
 {
-    // TODO
+    let r = new Request(event.params.requestId.toString());
+    r.type = "OwnershipRestore";
+    r.status = "Disputed";
+    r.token = event.params.tokenId.toString();
+    r.newowner = loadUser(event.params.newowner).id;
+    r.oldowner = loadUser(event.params.oldowner).id;
+    r.save();
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void

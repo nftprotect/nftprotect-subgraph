@@ -72,3 +72,28 @@ type SuccessorRequest @entity
     user: Bytes!
     successor: Bytes!
 }
+
+enum ReqType
+{
+    OwnershipAdjustment,
+    OwnershipRestore,
+    Burn
+}
+
+enum ReqStatus
+{
+    Initial,
+    Accepted,
+    Rejected,
+    Disputed
+}
+
+type Request @entity
+{
+    id: ID!
+    type: ReqType!
+    status: ReqStatus!
+    token: Token!
+    oldowner: User
+    newowner: User
+}
