@@ -77,6 +77,8 @@ export function handleBurnArbitrateAsked(event: BurnArbitrateAskedEvent): void
     r.status = "Disputed";
     r.token = event.params.tokenId.toString();
     r.newowner = loadUser(event.params.dst).id;
+    r.timestamp = event.block.timestamp;
+    r.blocknumber = event.block.number;
     r.save();
     // TODO: need to understand how to change status, because there is no event for it
 }
@@ -123,6 +125,8 @@ export function handleOwnershipAdjustmentAnswered(event: OwnershipAdjustmentAnsw
 {
     let r = Request.load(event.params.requestId.toString()) as Request;
     r.status = event.params.accept ? "Accepted" : "Rejected";
+    r.timestampChange = event.block.timestamp;
+    r.blocknumberChange = event.block.number;
     r.save();
     if(event.params.accept)
     {
@@ -142,10 +146,14 @@ export function handleOwnershipAdjustmentArbitrateAsked(event: OwnershipAdjustme
         r.token = event.params.tokenId.toString();
         r.newowner = loadUser(event.params.dst).id;
         r.oldowner = (Token.load(event.params.tokenId.toString()) as Token).ownerOriginal;
+        r.timestamp = event.block.timestamp;
+        r.blocknumber = event.block.number;
     }
     else
     {
         r = r as Request;
+        r.timestampChange = event.block.timestamp;
+        r.blocknumberChange = event.block.number;
     }
     r.status = "Disputed";
     r.save();
@@ -159,6 +167,8 @@ export function handleOwnershipAdjustmentAsked(event: OwnershipAdjustmentAskedEv
     r.token = event.params.tokenId.toString();
     r.newowner = loadUser(event.params.newowner).id;
     r.oldowner = loadUser(event.params.oldowner).id;
+    r.timestamp = event.block.timestamp;
+    r.blocknumber = event.block.number;
     r.save();
 }
 
@@ -166,6 +176,8 @@ export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEv
 {
     let r = Request.load(event.params.requestId.toString()) as Request;
     r.status = event.params.accept ? "Accepted" : "Rejected";
+    r.timestampChange = event.block.timestamp;
+    r.blocknumberChange = event.block.number;
     r.save();
     if(event.params.accept)
     {
@@ -183,6 +195,8 @@ export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): 
     r.token = event.params.tokenId.toString();
     r.newowner = loadUser(event.params.newowner).id;
     r.oldowner = loadUser(event.params.oldowner).id;
+    r.timestamp = event.block.timestamp;
+    r.blocknumber = event.block.number;
     r.save();
 }
 
@@ -201,6 +215,8 @@ export function handleProtected(event: ProtectedEvent): void
     t.contract = event.params.contr;
     t.tokenId = event.params.tokenIdOrig;
     t.amount = event.params.amount;
+    t.timestamp = event.block.timestamp;
+    t.blocknumber = event.block.number;
     t.save();
 }
 

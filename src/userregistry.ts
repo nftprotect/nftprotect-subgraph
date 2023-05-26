@@ -95,6 +95,8 @@ export function handleSuccessorApproved(event: SuccessorApprovedEvent): void
 {
     let r = SuccessorRequest.load(event.params.requestId.toString()) as SuccessorRequest;
     r.status = "Accepted";
+    r.timestampChange = event.block.timestamp;
+    r.blocknumberChange = event.block.number;
     r.save();
 
     let u = loadUser(r.user);
@@ -106,6 +108,8 @@ export function handleSuccessorRejected(event: SuccessorRejectedEvent): void
 {
     let r = SuccessorRequest.load(event.params.requestId.toString()) as SuccessorRequest;
     r.status = "Rejected";
+    r.timestampChange = event.block.timestamp;
+    r.blocknumberChange = event.block.number;
     r.save();
 }
 
@@ -115,5 +119,7 @@ export function handleSuccessorRequested(event: SuccessorRequestedEvent): void
     r.user = event.params.user;
     r.successor = event.params.successor;
     r.status = "InDispute";
+    r.timestamp = event.block.timestamp;
+    r.blocknumber = event.block.number;
     r.save();
 }

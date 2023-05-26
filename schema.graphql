@@ -56,6 +56,8 @@ type Token @entity
     contract: Bytes!
     tokenId: BigInt
     amount: BigInt
+    timestamp: BigInt!
+    blocknumber: BigInt!
 }
 
 enum Status
@@ -71,6 +73,10 @@ type SuccessorRequest @entity
     status: Status!
     user: Bytes!
     successor: Bytes!
+    timestamp: BigInt!
+    blocknumber: BigInt!
+    timestampChange: BigInt
+    blocknumberChange: BigInt
 }
 
 enum ReqType
@@ -96,4 +102,8 @@ type Request @entity
     token: Token!
     oldowner: User
     newowner: User
+    timestamp: BigInt!
+    blocknumber: BigInt!
+    timestampChange: BigInt
+    blocknumberChange: BigInt
 }
