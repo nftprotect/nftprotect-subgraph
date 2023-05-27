@@ -29,6 +29,7 @@ dataSources:
         - OwnershipAdjustmentAsked
         - OwnershipRestoreAnswered
         - OwnershipRestoreAsked
+        - BurnAnswered
         - OwnershipTransferred
         - Protected
         - ScoreThresholdChanged
@@ -69,6 +70,8 @@ dataSources:
           handler: handleOwnershipRestoreAnswered
         - event: OwnershipRestoreAsked(indexed uint256,indexed address,indexed address,uint256)
           handler: handleOwnershipRestoreAsked
+        - event: BurnAnswered(indexed uint256,bool)
+          handler: handleBurnAnswered
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: Protected(indexed uint256,indexed address,address,uint256,indexed

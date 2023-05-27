@@ -22,6 +22,7 @@ import
     OwnershipAdjustmentAsked as OwnershipAdjustmentAskedEvent,
     OwnershipRestoreAnswered as OwnershipRestoreAnsweredEvent,
     OwnershipRestoreAsked as OwnershipRestoreAskedEvent,
+    BurnAnswered as BurnAnsweredEvent,
     OwnershipTransferred as OwnershipTransferredEvent,
     Protected as ProtectedEvent,
     ScoreThresholdChanged as ScoreThresholdChangedEvent,
@@ -80,7 +81,6 @@ export function handleBurnArbitrateAsked(event: BurnArbitrateAskedEvent): void
     r.timestamp = event.block.timestamp;
     r.blocknumber = event.block.number;
     r.save();
-    // TODO: need to understand how to change status, because there is no event for it
 }
 
 export function handleBurnOnActionChanged(event: BurnOnActionChangedEvent): void
@@ -197,6 +197,15 @@ export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): 
     r.oldowner = loadUser(event.params.oldowner).id;
     r.timestamp = event.block.timestamp;
     r.blocknumber = event.block.number;
+    r.save();
+}
+
+export function handleBurnAnswered(event: BurnAnsweredEvent): void
+{
+    let r = Request.load(event.params.requestId.toString()) as Request;
+    r.status = event.params.accept ? "Accepted" : "Rejected";
+    r.timestampChange = event.block.timestamp;
+    r.blocknumberChange = event.block.number;
     r.save();
 }
 
