@@ -6,9 +6,9 @@ dataSources:
     name: nftprotect
     network: goerli
     source:
-      address: "0xdccFE315E42c05c8699F3AC046b0A2F3115f4B02"
+      address: "0xf837fB19Ffd6c87700fb98743F29acCa43454299"
       abi: nftprotect
-      startBlock: 8973575
+      startBlock: 9073902
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -87,9 +87,9 @@ dataSources:
     name: nftpcoupons
     network: goerli
     source:
-      address: "0x03d8899BDad1F05F28373f04F05a0A9dC6BDad64"
+      address: "0x5512F1beb7078329c6f437E03ff845243B8b6179"
       abi: nftpcoupons
-      startBlock: 8973593
+      startBlock: 9073902
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -119,9 +119,9 @@ dataSources:
     name: userregistry
     network: goerli
     source:
-      address: "0xE2E809F3Aec329B8Af5482eB3B1AD6A90510e808"
+      address: "0xcAD5C3a950667EEa1E9E7eAb92dFdB56502792aD"
       abi: userregistry
-      startBlock: 8973593
+      startBlock: 9073922
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
