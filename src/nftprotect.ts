@@ -241,9 +241,13 @@ export function handleTransfer(event: TransferEvent): void
     if (event.params.to != Address.fromString("0x0000000000000000000000000000000000000000") &&
         event.params.from != Address.fromString("0x0000000000000000000000000000000000000000"))
     {
-        const t = Token.load(event.params.tokenId.toString()) as Token;
-        t.ownerProtected = loadUser(event.params.to).id;
-        t.save();
+        let t = Token.load(event.params.tokenId.toString());
+        if(t)
+        {
+            t = t as Token;
+            t.ownerProtected = loadUser(event.params.to).id;
+            t.save();
+        }
     }
 }
 
