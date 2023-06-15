@@ -76,11 +76,17 @@ export function handleBurnArbitrateAsked(event: BurnArbitrateAskedEvent): void
     let r = new Request(event.params.requestId.toString());
     r.type = "Burn";
     r.status = "Disputed";
-    r.token = event.params.tokenId.toString();
+    let tokenId = event.params.tokenId.toString();
+    r.token = tokenId;
     r.newowner = loadUser(event.params.dst).id;
     r.timestamp = event.block.timestamp;
     r.blocknumber = event.block.number;
     r.save();
+
+    // Load the related Token and update the latestRequest field
+    let token = Token.load(tokenId);
+    token.latestRequest = r.id;
+    token.save();
 }
 
 export function handleBurnOnActionChanged(event: BurnOnActionChangedEvent): void
@@ -143,11 +149,17 @@ export function handleOwnershipAdjustmentArbitrateAsked(event: OwnershipAdjustme
     {
         r = new Request(event.params.requestId.toString());
         r.type = "OwnershipAdjustment";
-        r.token = event.params.tokenId.toString();
+        let tokenId = event.params.tokenId.toString();
+        r.token = tokenId;
         r.newowner = loadUser(event.params.dst).id;
         r.oldowner = (Token.load(event.params.tokenId.toString()) as Token).ownerOriginal;
         r.timestamp = event.block.timestamp;
         r.blocknumber = event.block.number;
+
+        // Load the related Token and update the latestRequest field
+        let token = Token.load(tokenId);
+        token.latestRequest = r.id;
+        token.save();
     }
     else
     {
@@ -164,12 +176,18 @@ export function handleOwnershipAdjustmentAsked(event: OwnershipAdjustmentAskedEv
     let r = new Request(event.params.requestId.toString());
     r.type = "OwnershipAdjustment";
     r.status = "Initial";
-    r.token = event.params.tokenId.toString();
+    let tokenId = event.params.tokenId.toString();
+    r.token = tokenId;
     r.newowner = loadUser(event.params.newowner).id;
     r.oldowner = loadUser(event.params.oldowner).id;
     r.timestamp = event.block.timestamp;
     r.blocknumber = event.block.number;
     r.save();
+
+    // Load the related Token and update the latestRequest field
+    let token = Token.load(tokenId);
+    token.latestRequest = r.id;
+    token.save();
 }
 
 export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEvent): void
@@ -192,12 +210,18 @@ export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): 
     let r = new Request(event.params.requestId.toString());
     r.type = "OwnershipRestore";
     r.status = "Disputed";
-    r.token = event.params.tokenId.toString();
+    let tokenId = event.params.tokenId.toString();
+    r.token = tokenId;
     r.newowner = loadUser(event.params.newowner).id;
     r.oldowner = loadUser(event.params.oldowner).id;
     r.timestamp = event.block.timestamp;
     r.blocknumber = event.block.number;
     r.save();
+
+    // Load the related Token and update the latestRequest field
+    let token = Token.load(tokenId);
+    token.latestRequest = r.id;
+    token.save();
 }
 
 export function handleBurnAnswered(event: BurnAnsweredEvent): void
