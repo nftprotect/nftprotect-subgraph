@@ -85,8 +85,10 @@ export function handleBurnArbitrateAsked(event: BurnArbitrateAskedEvent): void
 
     // Load the related Token and update the latestRequest field
     let token = Token.load(tokenId);
-    token.latestRequest = r.id;
-    token.save();
+    if (token) {
+        token.latestRequest = r.id;
+        token.save();
+    }
 }
 
 export function handleBurnOnActionChanged(event: BurnOnActionChangedEvent): void
@@ -155,20 +157,24 @@ export function handleOwnershipAdjustmentArbitrateAsked(event: OwnershipAdjustme
         r.oldowner = (Token.load(event.params.tokenId.toString()) as Token).ownerOriginal;
         r.timestamp = event.block.timestamp;
         r.blocknumber = event.block.number;
+        r.status = "Disputed";
+        r.save();
 
         // Load the related Token and update the latestRequest field
         let token = Token.load(tokenId);
-        token.latestRequest = r.id;
-        token.save();
+        if (token) {
+            token.latestRequest = r.id;
+            token.save();
+        }
     }
     else
     {
         r = r as Request;
         r.timestampChange = event.block.timestamp;
         r.blocknumberChange = event.block.number;
+        r.status = "Disputed";
+        r.save();
     }
-    r.status = "Disputed";
-    r.save();
 }
 
 export function handleOwnershipAdjustmentAsked(event: OwnershipAdjustmentAskedEvent): void
@@ -186,8 +192,10 @@ export function handleOwnershipAdjustmentAsked(event: OwnershipAdjustmentAskedEv
 
     // Load the related Token and update the latestRequest field
     let token = Token.load(tokenId);
-    token.latestRequest = r.id;
-    token.save();
+    if (token) {
+        token.latestRequest = r.id;
+        token.save();
+    }
 }
 
 export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEvent): void
@@ -220,8 +228,10 @@ export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): 
 
     // Load the related Token and update the latestRequest field
     let token = Token.load(tokenId);
-    token.latestRequest = r.id;
-    token.save();
+    if (token) {
+        token.latestRequest = r.id;
+        token.save();
+    }
 }
 
 export function handleBurnAnswered(event: BurnAnsweredEvent): void
