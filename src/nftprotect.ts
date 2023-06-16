@@ -282,9 +282,13 @@ export function handleTransfer(event: TransferEvent): void
 
 export function handleUnprotected(event: UnprotectedEvent): void
 {
-    let t = Token.load(event.params.tokenId.toString()) as Token;
-    t.burned = true;
-    t.save();
+    let t = Token.load(event.params.tokenId.toString());
+    if (t) 
+    {
+        t = t as Token;
+        t.burned = true;
+        t.save();
+    }
 }
 
 export function handleUserRegistryChanged(event: UserRegistryChangedEvent): void
