@@ -136,12 +136,6 @@ export function handleOwnershipAdjustmentAnswered(event: OwnershipAdjustmentAnsw
     r.timestampChange = event.block.timestamp;
     r.blocknumberChange = event.block.number;
     r.save();
-    if(event.params.accept)
-    {
-        let t = Token.load(r.token) as Token;
-        t.ownerOriginal = r.newowner as String;
-        t.save();
-    }
 }
 
 export function handleOwnershipAdjustmentArbitrateAsked(event: OwnershipAdjustmentArbitrateAskedEvent): void
