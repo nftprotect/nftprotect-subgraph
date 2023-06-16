@@ -251,6 +251,7 @@ export function handleOwnershipTransferred(event: OwnershipTransferredEvent): vo
 export function handleProtected(event: ProtectedEvent): void
 {
     let t = new Token(event.params.tokenId.toString());
+    t.burned = false;
     t.securityLevel = BigInt.fromI32(event.params.level);
     t.ownerOriginal = loadUser(event.params.owner).id;
     t.ownerProtected = t.ownerOriginal;
@@ -287,7 +288,9 @@ export function handleTransfer(event: TransferEvent): void
 
 export function handleUnprotected(event: UnprotectedEvent): void
 {
-    store.remove("Token", event.params.tokenId.toString());
+    let t = Token.load(event.params.tokenId.toString()) as Token;
+    t.burned = true;
+    t.save();
 }
 
 export function handleUserRegistryChanged(event: UserRegistryChangedEvent): void

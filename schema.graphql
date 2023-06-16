@@ -59,6 +59,7 @@ type Token @entity
     timestamp: BigInt!
     blocknumber: BigInt!
     latestRequest: Request
+    burned: Boolean!
 }
 
 enum Status
