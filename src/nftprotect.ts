@@ -202,7 +202,7 @@ export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEv
     if(event.params.accept)
     {
         let t = Token.load(r.token) as Token;
-        t.ownerProtected = r.newowner as String;
+        // t.ownerProtected = r.newowner as String; // breaks historical data
         t.save();
     }
 }
