@@ -125,7 +125,7 @@ export function handleMetaEvidenceLoaderChanged(event: MetaEvidenceLoaderChanged
 export function handleOwnershipAdjusted(event: OwnershipAdjustedEvent): void
 {
     let t = Token.load(event.params.tokenId.toString()) as Token;
-    t.ownerOriginal = loadUser(event.params.newowner).id;
+    // t.ownerOriginal = loadUser(event.params.newowner).id;
     t.save();
 }
 
@@ -202,7 +202,7 @@ export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEv
     if(event.params.accept)
     {
         let t = Token.load(r.token) as Token;
-        // t.ownerProtected = r.newowner as String; // breaks historical data
+        t.ownerProtected = r.newowner as string;
         t.save();
     }
 }
