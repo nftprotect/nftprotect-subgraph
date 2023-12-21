@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: nftprotect
-    network: goerli
+    network: sepolia
     source:
-      address: "0x5aDf8b955011a09726CbAB8d43622ac1B2fB344F"
       abi: nftprotect
-      startBlock: 9225230
+      address: "0xB1A382a0946528cAc1Bde3f419B69809CC347613"
+      startBlock: 3876010
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -21,7 +21,6 @@ dataSources:
         - BurnArbitrateAsked
         - BurnOnActionChanged
         - Deployed
-        - FeeChanged
         - MetaEvidenceLoaderChanged
         - OwnershipAdjusted
         - OwnershipAdjustmentAnswered
@@ -54,21 +53,22 @@ dataSources:
           handler: handleBurnOnActionChanged
         - event: Deployed()
           handler: handleDeployed
-        - event: FeeChanged(indexed uint8,uint256)
-          handler: handleFeeChanged
         - event: MetaEvidenceLoaderChanged(address)
           handler: handleMetaEvidenceLoaderChanged
         - event: OwnershipAdjusted(indexed address,indexed address,indexed uint256)
           handler: handleOwnershipAdjusted
         - event: OwnershipAdjustmentAnswered(indexed uint256,bool)
           handler: handleOwnershipAdjustmentAnswered
-        - event: OwnershipAdjustmentArbitrateAsked(indexed uint256,address,indexed uint256)
+        - event: OwnershipAdjustmentArbitrateAsked(indexed uint256,address,indexed
+            uint256)
           handler: handleOwnershipAdjustmentArbitrateAsked
-        - event: OwnershipAdjustmentAsked(indexed uint256,indexed address,indexed address,uint256)
+        - event: OwnershipAdjustmentAsked(indexed uint256,indexed address,indexed
+            address,uint256)
           handler: handleOwnershipAdjustmentAsked
         - event: OwnershipRestoreAnswered(indexed uint256,bool)
           handler: handleOwnershipRestoreAnswered
-        - event: OwnershipRestoreAsked(indexed uint256,indexed address,indexed address,uint256)
+        - event: OwnershipRestoreAsked(indexed uint256,indexed address,indexed
+            address,uint256)
           handler: handleOwnershipRestoreAsked
         - event: BurnAnswered(indexed uint256,bool)
           handler: handleBurnAnswered
@@ -88,11 +88,10 @@ dataSources:
       file: ./src/nftprotect.ts
   - kind: ethereum
     name: nftpcoupons
-    network: goerli
+    network: sepolia
     source:
-      address: "0x3D9D532351C473C476b1077D1770f373B5f1AAc4"
       abi: nftpcoupons
-      startBlock: 9225254
+      address: "0x8c743B717e960fa00779b7b148D63a59009E9c9d"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -120,11 +119,10 @@ dataSources:
       file: ./src/nftpcoupons.ts
   - kind: ethereum
     name: userregistry
-    network: goerli
+    network: sepolia
     source:
-      address: "0x9B80f551E8f416b54EA9d71AF5acE49aA0609aAC"
       abi: userregistry
-      startBlock: 9225254
+      address: "0x49ba52fe9dF9e55BeF56BE7D0F19eF8b645D51F3"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -135,6 +133,7 @@ dataSources:
         - userregistryArbitratorRegistryChanged
         - DIDRegistered
         - DIDUnregistered
+        - FeeChanged
         - userregistryDeployed
         - userregistryOwnershipTransferred
         - PartnerSet
@@ -160,7 +159,7 @@ dataSources:
           handler: handleDeployed
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: PartnerSet(indexed address,uint256)
+        - event: PartnerSet(indexed address,uint8)
           handler: handlePartnerSet
         - event: ReferrerSet(indexed address,indexed address)
           handler: handleReferrerSet
@@ -170,14 +169,15 @@ dataSources:
           handler: handleSuccessorRejected
         - event: SuccessorRequested(indexed uint256,indexed address,indexed address)
           handler: handleSuccessorRequested
+        - event: FeeChanged(indexed uint8,uint256)
+          handler: handleFeeChanged
       file: ./src/userregistry.ts
   - kind: ethereum
     name: arbitratorregistry
-    network: goerli
+    network: sepolia
     source:
-      address: "0x6b61f0a88C4A2CfeF2b9f948093C95531a6B9F04"
       abi: arbitratorregistry
-      startBlock: 8899287
+      address: "0x0cEC9a8A65A5d9D0e39fa9B26e5F9dE3FDC4D7fb"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

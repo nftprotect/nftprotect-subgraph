@@ -1,38 +1,38 @@
 {
   "goerli": {
     "nftprotect": {
-      "address": "0x5aDf8b955011a09726CbAB8d43622ac1B2fB344F",
-      "startBlock": 9421467
+      "address": "0x6ae4800040e588c2fa2e96ee68a987013d9afd13",
+      "startBlock": 10242396
     },
     "nftpcoupons": {
-      "address": "0x3D9D532351C473C476b1077D1770f373B5f1AAc4",
-      "startBlock": 9421467
+      "address": "0x6CbEAE91BCd7B3f5389780564c2ca8FDe2D4E59e",
+      "startBlock": 10242397
     },
     "userregistry": {
-      "address": "0x9B80f551E8f416b54EA9d71AF5acE49aA0609aAC",
-      "startBlock": 9421467
+      "address": "0x35c0d4999655ba4a956889640d7c1a8d11a2925a",
+      "startBlock": 10242397
     },
     "arbitratorregistry": {
-      "address": "0x6b61f0a88C4A2CfeF2b9f948093C95531a6B9F04",
-      "startBlock": 9421467
+      "address": "0x094c049f25d6ea178b3262887d37ad9da36b2355",
+      "startBlock": 10242395
     }
   },
   "sepolia": {
     "nftprotect": {
-      "address": "0xB1A382a0946528cAc1Bde3f419B69809CC347613",
-      "startBlock": 3876010
+      "address": "0x5de5be0552e9e87e3b40f1f3e3388ca97f347f1a",
+      "startBlock": 4923464
     },
     "arbitratorregistry": {
-      "address": "0x0cEC9a8A65A5d9D0e39fa9B26e5F9dE3FDC4D7fb",
-      "startBlock": 3876002
+      "address": "0x423f42f53f67356e7bc9093410303c68c8478fe7",
+      "startBlock": 4923463
     },
     "userregistry": {
-      "address": "0x49ba52fe9dF9e55BeF56BE7D0F19eF8b645D51F3",
-      "startBlock": 3876017
+      "address": "0x2d244d1c312db924ecafbe51697b3726851e2bdd",
+      "startBlock": 4923465
     },
     "nftpcoupons": {
-      "address": "0x8c743B717e960fa00779b7b148D63a59009E9c9d",
-      "startBlock": 3876017
+      "address": "0x55b328a60C99E9FCc8878062aBDE5800042a0b5c",
+      "startBlock": 4923465
     }
   }
 }

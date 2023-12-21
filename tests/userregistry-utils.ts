@@ -137,20 +137,20 @@ export function createOwnershipTransferredEvent(
 }
 
 export function createPartnerSetEvent(
-  partnet: Address,
-  percent: BigInt
+  partner: Address,
+  discount: BigInt
 ): PartnerSet {
   let partnerSetEvent = changetype<PartnerSet>(newMockEvent())
 
   partnerSetEvent.parameters = new Array()
 
   partnerSetEvent.parameters.push(
-    new ethereum.EventParam("partnet", ethereum.Value.fromAddress(partnet))
+    new ethereum.EventParam("partner", ethereum.Value.fromAddress(partner))
   )
   partnerSetEvent.parameters.push(
     new ethereum.EventParam(
-      "percent",
-      ethereum.Value.fromUnsignedBigInt(percent)
+      "discount",
+      ethereum.Value.fromUnsignedBigInt(discount)
     )
   )
 

@@ -1,9 +1,21 @@
 [
   {
     "inputs": [
-      { "internalType": "address", "name": "areg", "type": "address" },
-      { "internalType": "contract IUserDID", "name": "did", "type": "address" },
-      { "internalType": "address", "name": "nftprotectaddr", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "areg",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IUserDID",
+        "name": "did",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "nftprotectaddr",
+        "type": "address"
+      }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -91,7 +103,31 @@
     "name": "DIDUnregistered",
     "type": "event"
   },
-  { "anonymous": false, "inputs": [], "name": "Deployed", "type": "event" },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "Deployed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "enum IUserRegistry.Security",
+        "name": "level",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "feeWei",
+        "type": "uint256"
+      }
+    ],
+    "name": "FeeChanged",
+    "type": "event"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -117,14 +153,14 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "partnet",
+        "name": "partner",
         "type": "address"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "percent",
-        "type": "uint256"
+        "internalType": "uint8",
+        "name": "discount",
+        "type": "uint8"
       }
     ],
     "name": "PartnerSet",
@@ -203,7 +239,13 @@
   {
     "inputs": [],
     "name": "affiliatePercent",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -224,23 +266,97 @@
     "inputs": [],
     "name": "coupons",
     "outputs": [
-      { "internalType": "contract NFTPCoupons", "name": "", "type": "address" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "dids",
-    "outputs": [
-      { "internalType": "contract IUserDID", "name": "", "type": "address" }
+      {
+        "internalType": "contract NFTPCoupons",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "requestId", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "partner",
+        "type": "address"
+      }
+    ],
+    "name": "deletePartner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "dids",
+    "outputs": [
+      {
+        "internalType": "contract IUserDID",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "enum IUserRegistry.Security",
+        "name": "level",
+        "type": "uint8"
+      }
+    ],
+    "name": "feeForUser",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum IUserRegistry.Security",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "name": "feeWei",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "requestId",
+        "type": "uint256"
+      }
     ],
     "name": "fetchRuling",
     "outputs": [],
@@ -249,77 +365,159 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "hasSuccessor",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "isRegistered",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "address", "name": "successor", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "successor",
+        "type": "address"
+      }
     ],
     "name": "isSuccessor",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "metaEvidenceLoader",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "metaEvidenceURI",
-    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "nftprotect",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "partners",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "partners",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
       {
         "internalType": "address payable",
         "name": "referrer",
         "type": "address"
       },
-      { "internalType": "bool", "name": "canUseCoupons", "type": "bool" },
-      { "internalType": "uint256", "name": "fee", "type": "uint256" }
+      {
+        "internalType": "bool",
+        "name": "canUseCoupons",
+        "type": "bool"
+      },
+      {
+        "internalType": "enum IUserRegistry.Security",
+        "name": "level",
+        "type": "uint8"
+      }
     ],
     "name": "processPayment",
     "outputs": [],
@@ -327,17 +525,31 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "referrers",
     "outputs": [
-      { "internalType": "address payable", "name": "", "type": "address" }
+      {
+        "internalType": "address payable",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "contract IUserDID", "name": "did", "type": "address" }
+      {
+        "internalType": "contract IUserDID",
+        "name": "did",
+        "type": "address"
+      }
     ],
     "name": "registerDID",
     "outputs": [],
@@ -352,11 +564,25 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "requests",
     "outputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "address", "name": "successor", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "successor",
+        "type": "address"
+      },
       {
         "internalType": "contract IArbitrableProxy",
         "name": "arbitrator",
@@ -367,7 +593,11 @@
         "name": "externalDisputeId",
         "type": "uint256"
       },
-      { "internalType": "uint256", "name": "localDisputeId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "localDisputeId",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -375,22 +605,42 @@
   {
     "inputs": [],
     "name": "requestsCounter",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "scores",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "percent", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "percent",
+        "type": "uint256"
+      }
     ],
     "name": "setAffiliatePercent",
     "outputs": [],
@@ -399,7 +649,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "areg", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "areg",
+        "type": "address"
+      }
     ],
     "name": "setArbitratorRegistry",
     "outputs": [],
@@ -407,7 +661,31 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "mel", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "enum IUserRegistry.Security",
+        "name": "level",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fw",
+        "type": "uint256"
+      }
+    ],
+    "name": "setFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "mel",
+        "type": "address"
+      }
+    ],
     "name": "setMetaEvidenceLoader",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -415,8 +693,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "partner", "type": "address" },
-      { "internalType": "uint256", "name": "percent", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "partner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint8",
+        "name": "discount",
+        "type": "uint8"
+      }
     ],
     "name": "setPartner",
     "outputs": [],
@@ -425,7 +711,11 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "evidence", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "evidence",
+        "type": "string"
+      }
     ],
     "name": "submitMetaEvidence",
     "outputs": [],
@@ -434,34 +724,78 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "successorOf",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "uint256", "name": "arbitratorId", "type": "uint256" },
-      { "internalType": "string", "name": "evidence", "type": "string" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "arbitratorId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "evidence",
+        "type": "string"
+      }
     ],
     "name": "successorRequest",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "payable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "successors",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "transferOwnership",
     "outputs": [],
@@ -470,7 +804,11 @@
   },
   {
     "inputs": [
-      { "internalType": "contract IUserDID", "name": "did", "type": "address" }
+      {
+        "internalType": "contract IUserDID",
+        "name": "did",
+        "type": "address"
+      }
     ],
     "name": "unregisterDID",
     "outputs": [],

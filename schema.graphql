@@ -27,7 +27,7 @@ type Arbitrator @entity
 type Partner @entity
 {
     id: ID!
-    percent: BigInt!
+    discount: Int!
 }
 
 type DID @entity

@@ -14,7 +14,6 @@ import
     BurnArbitrateAsked as BurnArbitrateAskedEvent,
     BurnOnActionChanged as BurnOnActionChangedEvent,
     Deployed as DeployedEvent,
-    FeeChanged as FeeChangedEvent,
     MetaEvidenceLoaderChanged as MetaEvidenceLoaderChangedEvent,
     OwnershipAdjusted as OwnershipAdjustedEvent,
     OwnershipAdjustmentAnswered as OwnershipAdjustmentAnsweredEvent,
@@ -101,20 +100,6 @@ export function handleBurnOnActionChanged(event: BurnOnActionChangedEvent): void
 export function handleDeployed(event: DeployedEvent): void
 {
     const s = loadSystem("nftprotect");
-}
-
-export function handleFeeChanged(event: FeeChangedEvent): void
-{
-    const s = loadSystem("nftprotect");
-    if(event.params.level == 0)
-    {
-        s.feeBasic = event.params.feeWei;
-    }
-    else
-    {
-        s.feeUltra = event.params.feeWei;
-    }
-    s.save();
 }
 
 export function handleMetaEvidenceLoaderChanged(event: MetaEvidenceLoaderChangedEvent): void

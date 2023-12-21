@@ -16,7 +16,8 @@ import
     ReferrerSet as ReferrerSetEvent,
     SuccessorApproved as SuccessorApprovedEvent,
     SuccessorRejected as SuccessorRejectedEvent,
-    SuccessorRequested as SuccessorRequestedEvent
+    SuccessorRequested as SuccessorRequestedEvent,
+    FeeChanged as FeeChangedEvent,
 } from "../generated/userregistry/userregistry"
 
 import
@@ -37,6 +38,19 @@ import
     loadUser
 } from "./user"
 
+export function handleFeeChanged(event: FeeChangedEvent): void
+{
+    const s = loadSystem("nftprotect");
+    if(event.params.level == 0)
+    {
+        s.feeBasic = event.params.feeWei;
+    }
+    else
+    {
+        s.feeUltra = event.params.feeWei;
+    }
+    s.save();
+}
 
 export function handleAffiliatePayment(event: AffiliatePaymentEvent): void
 {
@@ -79,8 +93,8 @@ export function handleOwnershipTransferred(event: OwnershipTransferredEvent): vo
 
 export function handlePartnerSet(event: PartnerSetEvent): void
 {
-    let p = new Partner(event.params.partnet.toHex().toString());
-    p.percent = event.params.percent;
+    let p = new Partner(event.params.partner.toHex().toString());
+    p.discount = event.params.discount;
     p.save();
 }
 
