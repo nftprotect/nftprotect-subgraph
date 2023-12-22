@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: nftprotect
-    network: sepolia
+    network: goerli
     source:
       abi: nftprotect
-      address: "0xca2eb5a3fb5d74aecbb54fc513f678a95bb42bd4"
-      startBlock: 4936013
+      address: "0x8732b75a23fefab3be8825ae87dffcb38760121f"
+      startBlock: 10252608
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -88,11 +88,11 @@ dataSources:
       file: ./src/nftprotect.ts
   - kind: ethereum
     name: nftpcoupons
-    network: sepolia
+    network: goerli
     source:
       abi: nftpcoupons
-      address: "0x46BD8813d9e66b37d99d29241cA58b92C9B0C88f"
-      startBlock: 4936014
+      address: "0x6a204dDA156dafA6198A51241B21340627747402"
+      startBlock: 10252610
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -120,11 +120,11 @@ dataSources:
       file: ./src/nftpcoupons.ts
   - kind: ethereum
     name: userregistry
-    network: sepolia
+    network: goerli
     source:
       abi: userregistry
-      address: "0x771192e571402e4dc96636a72a40863c8daa63c8"
-      startBlock: 4936014
+      address: "0x68deab39fb68a7c24d67d16b1f133809c41c008f"
+      startBlock: 10252610
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -176,11 +176,11 @@ dataSources:
       file: ./src/userregistry.ts
   - kind: ethereum
     name: arbitratorregistry
-    network: sepolia
+    network: goerli
     source:
       abi: arbitratorregistry
-      address: "0x423f42f53f67356e7bc9093410303c68c8478fe7"
-      startBlock: 4923463
+      address: "0x094c049f25d6ea178b3262887d37ad9da36b2355"
+      startBlock: 10242395
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
