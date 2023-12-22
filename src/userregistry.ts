@@ -95,6 +95,7 @@ export function handlePartnerSet(event: PartnerSetEvent): void
 {
     let p = new Partner(event.params.partner.toHex().toString());
     p.discount = event.params.discount;
+    p.affiliatePercent = event.params.affiliatePercent;
     p.save();
 }
 

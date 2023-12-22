@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: nftprotect
-    network: goerli
+    network: sepolia
     source:
       abi: nftprotect
-      address: "0x13367954799c3c89452b0a634f898f5d2f3d6e84"
-      startBlock: 10247256
+      address: "0xc8aea4812e3baf160c97782d349525327f171483"
+      startBlock: 4935666
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -88,11 +88,11 @@ dataSources:
       file: ./src/nftprotect.ts
   - kind: ethereum
     name: nftpcoupons
-    network: goerli
+    network: sepolia
     source:
       abi: nftpcoupons
-      address: "0x90F888c0Da7Aa0ca87ABf2ee92bdF8C1d3A03882"
-      startBlock: 10247257
+      address: "0x0cD0E732b600b282AA5e41dc0Ca7203726608745"
+      startBlock: 4935667
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -120,11 +120,11 @@ dataSources:
       file: ./src/nftpcoupons.ts
   - kind: ethereum
     name: userregistry
-    network: goerli
+    network: sepolia
     source:
       abi: userregistry
-      address: "0xbfdc9f6ba697312a8a86a19aaff036e720fce016"
-      startBlock: 10247257
+      address: "0x84439de25faf197929bd3f81de3a650cae6b76ff"
+      startBlock: 4935667
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -149,7 +149,7 @@ dataSources:
       eventHandlers:
         - event: AffiliatePayment(indexed address,indexed address,uint256)
           handler: handleAffiliatePayment
-        - event: AffiliatePercentChanged(uint256)
+        - event: AffiliatePercentChanged(uint8)
           handler: handleAffiliatePercentChanged
         - event: ArbitratorRegistryChanged(address)
           handler: handleArbitratorRegistryChanged
@@ -161,7 +161,7 @@ dataSources:
           handler: handleDeployed
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: PartnerSet(indexed address,uint8)
+        - event: PartnerSet(indexed address,uint8,uint8)
           handler: handlePartnerSet
         - event: ReferrerSet(indexed address,indexed address)
           handler: handleReferrerSet
@@ -176,11 +176,11 @@ dataSources:
       file: ./src/userregistry.ts
   - kind: ethereum
     name: arbitratorregistry
-    network: goerli
+    network: sepolia
     source:
       abi: arbitratorregistry
-      address: "0x094c049f25d6ea178b3262887d37ad9da36b2355"
-      startBlock: 10242395
+      address: "0x423f42f53f67356e7bc9093410303c68c8478fe7"
+      startBlock: 4923463
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
