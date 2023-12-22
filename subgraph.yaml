@@ -7,8 +7,8 @@ dataSources:
     network: sepolia
     source:
       abi: nftprotect
-      address: "0xc8aea4812e3baf160c97782d349525327f171483"
-      startBlock: 4935666
+      address: "0xca2eb5a3fb5d74aecbb54fc513f678a95bb42bd4"
+      startBlock: 4936013
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -91,8 +91,8 @@ dataSources:
     network: sepolia
     source:
       abi: nftpcoupons
-      address: "0x0cD0E732b600b282AA5e41dc0Ca7203726608745"
-      startBlock: 4935667
+      address: "0x46BD8813d9e66b37d99d29241cA58b92C9B0C88f"
+      startBlock: 4936014
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -123,8 +123,8 @@ dataSources:
     network: sepolia
     source:
       abi: userregistry
-      address: "0x84439de25faf197929bd3f81de3a650cae6b76ff"
-      startBlock: 4935667
+      address: "0x771192e571402e4dc96636a72a40863c8daa63c8"
+      startBlock: 4936014
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
