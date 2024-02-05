@@ -110,3 +110,13 @@ type Request @entity
     timestampChange: BigInt
     blocknumberChange: BigInt
 }
+
+type AffiliatePayment @entity
+{
+    id: ID!
+    from: Bytes!
+    to: Bytes!
+    amount: BigInt!
+    timestamp: BigInt!
+    blocknumber: BigInt!
+}

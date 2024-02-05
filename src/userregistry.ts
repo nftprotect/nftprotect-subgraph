@@ -25,7 +25,8 @@ import
     System,
     Partner,
     DID,
-    SuccessorRequest
+    SuccessorRequest,
+    AffiliatePayment
 } from "../generated/schema"
 
 import
@@ -52,9 +53,15 @@ export function handleFeeChanged(event: FeeChangedEvent): void
     s.save();
 }
 
-export function handleAffiliatePayment(event: AffiliatePaymentEvent): void
-{
-    // do nothing
+export function handleAffiliatePayment(event: AffiliatePaymentEvent): void {
+    let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+    let payment = new AffiliatePayment(id);
+    payment.from = event.params.from;
+    payment.to = event.params.to;
+    payment.amount = event.params.amountWei;
+    payment.timestamp = event.block.timestamp;
+    payment.blocknumber = event.block.number;
+    payment.save();
 }
 
 export function handleAffiliatePercentChanged(event: AffiliatePercentChangedEvent): void
