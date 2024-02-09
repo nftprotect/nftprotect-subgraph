@@ -20,19 +20,19 @@
   "sepolia": {
     "nftprotect": {
       "address": "0xe7807e973f42aea32da71c15a6441760f675d9cc",
-      "startBlock": 4936571
+      "startBlock": 5250204
     },
     "arbitratorregistry": {
       "address": "0xa8d82ab740b0ba1a1b5784b86ecdc41d53e4ff15",
-      "startBlock": 4923463
+      "startBlock": 5250202
     },
     "userregistry": {
       "address": "0x727718859965b1c88c79491721d9b861654f6a73",
-      "startBlock": 4936572
+      "startBlock": 5250206
     },
     "nftpcoupons": {
       "address": "0x8f1cb013426f591220c51c516ac185a21405afa8",
-      "startBlock": 4936572
+      "startBlock": 5250205
     }
   }
 }
