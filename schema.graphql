@@ -45,6 +45,8 @@ type User @entity
     coupons: BigInt!
     tokensProtected: [Token!] @derivedFrom(field: "ownerProtected")
     tokensOriginal: [Token!] @derivedFrom(field: "ownerOriginal")
+    totalReferrals: BigInt!
+    totalRewards: BigInt!
 }
 
 type Token @entity

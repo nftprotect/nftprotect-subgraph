@@ -17,6 +17,8 @@ export function loadUser(user: Bytes): User
     {
         u = new User(user.toHex().toString());
         u.coupons = BigInt.fromI32(0);
+        u.totalReferrals = BigInt.fromI32(0);
+        u.totalRewards = BigInt.fromI32(0);
         u.save();
     }
     return u as User;

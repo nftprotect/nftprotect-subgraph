@@ -65,6 +65,10 @@ export function handleAffiliatePayment(event: AffiliatePaymentEvent): void {
     payment.blocknumber = event.block.number;
     payment.txHash = event.transaction.hash;
     payment.save();
+    // Add reward to referrer
+    let referrer = loadUser(payment.referrer);
+    referrer.totalRewards = referrer.totalRewards.plus(payment.amount);
+    referrer.save();
 }
 
 export function handleAffiliatePercentChanged(event: AffiliatePercentChangedEvent): void
@@ -114,6 +118,10 @@ export function handleReferrerSet(event: ReferrerSetEvent): void
     let u = loadUser(event.params.user);
     u.referrer = event.params.referrer;
     u.save();
+    // Add referral to referrer
+    let referrer = loadUser(event.params.referrer);
+    referrer.totalReferrals = referrer.totalReferrals.plus(new BigInt(1));
+    referrer.save();
     // Add AffiliateAction    
     let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
     let action = new AffiliateAction(id);
