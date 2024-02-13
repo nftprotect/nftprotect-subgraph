@@ -120,7 +120,7 @@ export function handleReferrerSet(event: ReferrerSetEvent): void
     u.save();
     // Add referral to referrer
     let referrer = loadUser(event.params.referrer);
-    referrer.totalReferrals = referrer.totalReferrals.plus(new BigInt(1));
+    referrer.totalReferrals = referrer.totalReferrals.plus(BigInt.fromI32(1));
     referrer.save();
     // Add AffiliateAction    
     let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
@@ -128,7 +128,7 @@ export function handleReferrerSet(event: ReferrerSetEvent): void
     action.type = "Register"; 
     action.referral = event.params.user;
     action.referrer = event.params.referrer;
-    action.amount = new BigInt(0);
+    action.amount = BigInt.fromI32(0);
     action.timestamp = event.block.timestamp;
     action.blocknumber = event.block.number;
     action.txHash = event.transaction.hash;
