@@ -1,5 +1,6 @@
 import
 {
+    BigInt,
     store
 } from "@graphprotocol/graph-ts"
 
@@ -26,7 +27,7 @@ import
     Partner,
     DID,
     SuccessorRequest,
-    AffiliatePayment
+    AffiliateAction,
 } from "../generated/schema"
 
 import
@@ -55,12 +56,14 @@ export function handleFeeChanged(event: FeeChangedEvent): void
 
 export function handleAffiliatePayment(event: AffiliatePaymentEvent): void {
     let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
-    let payment = new AffiliatePayment(id);
-    payment.from = event.params.from;
-    payment.to = event.params.to;
+    let payment = new AffiliateAction(id);
+    payment.type = "Payment";
+    payment.referral = event.params.from;
+    payment.referrer = event.params.to;
     payment.amount = event.params.amountWei;
     payment.timestamp = event.block.timestamp;
     payment.blocknumber = event.block.number;
+    payment.txHash = event.transaction.hash;
     payment.save();
 }
 
@@ -111,6 +114,17 @@ export function handleReferrerSet(event: ReferrerSetEvent): void
     let u = loadUser(event.params.user);
     u.referrer = event.params.referrer;
     u.save();
+    // Add AffiliateAction    
+    let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+    let action = new AffiliateAction(id);
+    action.type = "Register"; 
+    action.referral = event.params.user;
+    action.referrer = event.params.referrer;
+    action.amount = new BigInt(0);
+    action.timestamp = event.block.timestamp;
+    action.blocknumber = event.block.number;
+    action.txHash = event.transaction.hash;
+    action.save();
 }
 
 export function handleSuccessorApproved(event: SuccessorApprovedEvent): void

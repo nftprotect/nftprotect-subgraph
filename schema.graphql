@@ -97,6 +97,12 @@ enum ReqStatus
     Disputed
 }
 
+enum AffiliateActionType
+{
+    Register,
+    Payment
+}
+
 type Request @entity
 {
     id: ID!
@@ -111,12 +117,14 @@ type Request @entity
     blocknumberChange: BigInt
 }
 
-type AffiliatePayment @entity
+type AffiliateAction @entity
 {
     id: ID!
-    from: Bytes!
-    to: Bytes!
+    referral: Bytes!
+    referrer: Bytes!
+    type: AffiliateActionType!
     amount: BigInt!
     timestamp: BigInt!
     blocknumber: BigInt!
+    txHash: Bytes!
 }
