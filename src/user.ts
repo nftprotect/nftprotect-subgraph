@@ -15,10 +15,11 @@ export function loadUser(user: Bytes): User
     let u = User.load(user.toHex().toString());
     if (!u)
     {
+        let zero = BigInt.fromI32(0);
         u = new User(user.toHex().toString());
-        u.coupons = BigInt.fromI32(0);
-        u.totalReferrals = BigInt.fromI32(0);
-        u.totalRewards = BigInt.fromI32(0);
+        u.totalReferrals = zero;
+        u.totalRewards = zero;
+        u.totalOwnedProtected = zero
         u.save();
     }
     return u as User;

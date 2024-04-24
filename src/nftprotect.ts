@@ -11,8 +11,8 @@ import
     ApprovalForAll as ApprovalForAllEvent,
     ArbitratorRegistryChanged as ArbitratorRegistryChangedEvent,
     BaseChanged as BaseChangedEvent,
-    BurnArbitrateAsked as BurnArbitrateAskedEvent,
     BurnOnActionChanged as BurnOnActionChangedEvent,
+    AllowThirdPartyTransfersChanged as AllowThirdPartyTransfersChangedEvent,
     Deployed as DeployedEvent,
     MetaEvidenceLoaderChanged as MetaEvidenceLoaderChangedEvent,
     OwnershipAdjusted as OwnershipAdjustedEvent,
@@ -21,10 +21,8 @@ import
     OwnershipAdjustmentAsked as OwnershipAdjustmentAskedEvent,
     OwnershipRestoreAnswered as OwnershipRestoreAnsweredEvent,
     OwnershipRestoreAsked as OwnershipRestoreAskedEvent,
-    BurnAnswered as BurnAnsweredEvent,
     OwnershipTransferred as OwnershipTransferredEvent,
     Protected as ProtectedEvent,
-    ScoreThresholdChanged as ScoreThresholdChangedEvent,
     Transfer as TransferEvent,
     Unprotected as UnprotectedEvent,
     UserRegistryChanged as UserRegistryChangedEvent
@@ -34,7 +32,8 @@ import
 {
     System,
     Token,
-    Request
+    Request,
+    Partner
 } from "../generated/schema"
 
 import
@@ -47,6 +46,7 @@ import
     loadUser
 } from "./user"
 
+const nullAddress = Address.fromString("0x0000000000000000000000000000000000000000");
 
 export function handleApproval(event: ApprovalEvent): void
 {
@@ -58,9 +58,10 @@ export function handleApprovalForAll(event: ApprovalForAllEvent): void
     // do nothing
 }
 
-export function handleArbitratorRegistryChanged(event: ArbitratorRegistryChangedEvent): void
-{
-    // do nothing
+export function handleArbitratorRegistryChanged(event: ArbitratorRegistryChangedEvent): void {
+    const s = loadSystem("nftprotect");
+    s.arbitratorregistry = event.params.areg;
+    s.save();
 }
 
 export function handleBaseChanged(event: BaseChangedEvent): void
@@ -70,30 +71,17 @@ export function handleBaseChanged(event: BaseChangedEvent): void
     s.save();
 }
 
-export function handleBurnArbitrateAsked(event: BurnArbitrateAskedEvent): void
-{
-    let r = new Request(event.params.requestId.toString());
-    r.type = "Burn";
-    r.status = "Disputed";
-    let tokenId = event.params.tokenId.toString();
-    r.token = tokenId;
-    r.newowner = loadUser(event.params.dst).id;
-    r.timestamp = event.block.timestamp;
-    r.blocknumber = event.block.number;
-    r.save();
-
-    // Load the related Token and update the latestRequest field
-    let token = Token.load(tokenId);
-    if (token) {
-        token.latestRequest = r.id;
-        token.save();
-    }
-}
-
 export function handleBurnOnActionChanged(event: BurnOnActionChangedEvent): void
 {
     const s = loadSystem("nftprotect");
     s.burnOnAction = event.params.boa;
+    s.save();
+}
+
+export function handleAllowThirdPartyTransfers(event: AllowThirdPartyTransfersChangedEvent): void
+{
+    const s = loadSystem("nftprotect");
+    s.allowThirdPartyTransfers = event.params.allowed;
     s.save();
 }
 
@@ -213,15 +201,6 @@ export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): 
     }
 }
 
-export function handleBurnAnswered(event: BurnAnsweredEvent): void
-{
-    let r = Request.load(event.params.requestId.toString()) as Request;
-    r.status = event.params.accept ? "Accepted" : "Rejected";
-    r.timestampChange = event.block.timestamp;
-    r.blocknumberChange = event.block.number;
-    r.save();
-}
-
 export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void
 {
     // do nothing
@@ -231,7 +210,6 @@ export function handleProtected(event: ProtectedEvent): void
 {
     let t = new Token(event.params.tokenId.toString());
     t.burned = false;
-    t.securityLevel = BigInt.fromI32(event.params.level);
     t.ownerOriginal = loadUser(event.params.owner).id;
     t.ownerProtected = t.ownerOriginal;
     t.assetType = event.params.assetType;
@@ -240,20 +218,22 @@ export function handleProtected(event: ProtectedEvent): void
     t.amount = event.params.amount;
     t.timestamp = event.block.timestamp;
     t.blocknumber = event.block.number;
-    t.save();
-}
 
-export function handleScoreThresholdChanged(event: ScoreThresholdChangedEvent): void
-{
-    const s = loadSystem("nftprotect");
-    s.scoreThreshold = event.params.threshold;
-    s.save();
+    // Add protection to partner
+    if (event.params.partner != nullAddress) {
+        let p = Partner.load(event.params.partner.toHex().toString());
+        if (p) {
+            p.totalProtected.plus(BigInt.fromI32(1));
+        }
+    }
+
+    t.save();
 }
 
 export function handleTransfer(event: TransferEvent): void
 {
-    if (event.params.to != Address.fromString("0x0000000000000000000000000000000000000000") &&
-        event.params.from != Address.fromString("0x0000000000000000000000000000000000000000"))
+    if (event.params.to != nullAddress &&
+        event.params.from != nullAddress)
     {
         let t = Token.load(event.params.tokenId.toString());
         if(t)
@@ -276,7 +256,8 @@ export function handleUnprotected(event: UnprotectedEvent): void
     }
 }
 
-export function handleUserRegistryChanged(event: UserRegistryChangedEvent): void
-{
-    // do nothing
+export function handleUserRegistryChanged(event: UserRegistryChangedEvent): void {
+    const s = loadSystem("nftprotect");
+    s.userregistry = event.params.ureg;
+    s.save();
 }
