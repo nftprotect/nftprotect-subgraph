@@ -25,7 +25,9 @@ import
     Protected as ProtectedEvent,
     Transfer as TransferEvent,
     Unprotected as UnprotectedEvent,
-    UserRegistryChanged as UserRegistryChangedEvent
+    UserRegistryChanged as UserRegistryChangedEvent,
+    SignatureVerifierChanged as SignatureVerifierChangedEvent,
+    MetaEvidenceSet as MetaEvidenceSetEvent
 } from "../generated/nftprotect/nftprotect"
 
 import
@@ -33,7 +35,9 @@ import
     System,
     Token,
     Request,
-    Partner
+    Partner,
+    MetaEvidence,
+    User
 } from "../generated/schema"
 
 import
@@ -98,7 +102,7 @@ export function handleMetaEvidenceLoaderChanged(event: MetaEvidenceLoaderChanged
 export function handleOwnershipAdjusted(event: OwnershipAdjustedEvent): void
 {
     let t = Token.load(event.params.tokenId.toString()) as Token;
-    // t.ownerOriginal = loadUser(event.params.newowner).id;
+    t.ownerOriginal = loadUser(event.params.newowner).id;
     t.save();
 }
 
@@ -206,41 +210,50 @@ export function handleOwnershipTransferred(event: OwnershipTransferredEvent): vo
     // do nothing
 }
 
-export function handleProtected(event: ProtectedEvent): void
-{
+export function handleProtected(event: ProtectedEvent): void {
     let t = new Token(event.params.tokenId.toString());
     t.burned = false;
-    t.ownerOriginal = loadUser(event.params.owner).id;
-    t.ownerProtected = t.ownerOriginal;
+    let ownerId = loadUser(event.params.owner).id;
+    t.ownerOriginal = ownerId;
+    t.ownerProtected = ownerId;
     t.assetType = event.params.assetType;
     t.contract = event.params.contr;
     t.tokenId = event.params.tokenIdOrig;
     t.amount = event.params.amount;
     t.timestamp = event.block.timestamp;
     t.blocknumber = event.block.number;
-
-    // Add protection to partner
-    if (event.params.partner != nullAddress) {
-        let p = Partner.load(event.params.partner.toHex().toString());
-        if (p) {
-            p.totalProtected.plus(BigInt.fromI32(1));
-        }
-    }
-
     t.save();
+
+    // Update totalOwnedProtected for the owner
+    let owner = User.load(ownerId);
+    if (owner) {
+        owner.totalOwnedProtected = owner.totalOwnedProtected.plus(BigInt.fromI32(1));
+        owner.save();
+    }
 }
 
-export function handleTransfer(event: TransferEvent): void
-{
-    if (event.params.to != nullAddress &&
-        event.params.from != nullAddress)
-    {
+export function handleTransfer(event: TransferEvent): void {
+    if (event.params.to != nullAddress && event.params.from != nullAddress) {
         let t = Token.load(event.params.tokenId.toString());
-        if(t)
-        {
-            t = t as Token;
-            t.ownerProtected = loadUser(event.params.to).id;
+        if (t) {
+            let previousOwnerId = t.ownerProtected;
+            let newOwnerId = loadUser(event.params.to).id;
+            t.ownerProtected = newOwnerId;
             t.save();
+
+            // Decrease totalOwnedProtected for the previous owner
+            let previousOwner = User.load(previousOwnerId);
+            if (previousOwner) {
+                previousOwner.totalOwnedProtected = previousOwner.totalOwnedProtected.minus(BigInt.fromI32(1));
+                previousOwner.save();
+            }
+
+            // Increase totalOwnedProtected for the new owner
+            let newOwner = User.load(newOwnerId);
+            if (newOwner) {
+                newOwner.totalOwnedProtected = newOwner.totalOwnedProtected.plus(BigInt.fromI32(1));
+                newOwner.save();
+            }
         }
     }
 }
@@ -260,4 +273,17 @@ export function handleUserRegistryChanged(event: UserRegistryChangedEvent): void
     const s = loadSystem("nftprotect");
     s.userregistry = event.params.ureg;
     s.save();
+}
+
+export function handleSignatureVerifierChanged(event: SignatureVerifierChangedEvent): void {
+    const s = loadSystem("nftprotect");
+    s.sigatureVerifier = event.params.newSigVerifier;
+    s.save();
+}
+
+export function handleMetaEvidenceSet(event: MetaEvidenceSetEvent): void {
+    let metaEvidence = new MetaEvidence(event.params.evidenceType.toString() + "-" + event.transaction.hash.toHex());
+    metaEvidence.evidenceType = event.params.evidenceType;
+    metaEvidence.evidence = event.params.evidence;
+    metaEvidence.save();
 }
