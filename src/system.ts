@@ -28,10 +28,6 @@ export function loadSystem(contract: string): System
     {
         s.nftprotect = dataSource.address();
         needToSave = true;
-    } else if (contract == "nftpcoupons" && !s.nftpcoupons)
-    {
-        s.nftpcoupons = dataSource.address();
-        needToSave = true;
     } else if (contract == "userregistry" && !s.userregistry)
     {
         s.userregistry = dataSource.address();

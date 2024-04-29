@@ -9,15 +9,11 @@ import
     AffiliatePayment as AffiliatePaymentEvent,
     AffiliatePercentChanged as AffiliatePercentChangedEvent,
     ArbitratorRegistryChanged as ArbitratorRegistryChangedEvent,
-    DIDRegistered as DIDRegisteredEvent,
-    DIDUnregistered as DIDUnregisteredEvent,
     Deployed as DeployedEvent,
     OwnershipTransferred as OwnershipTransferredEvent,
     PartnerSet as PartnerSetEvent,
+    PartnerDeleted as PartnerDeletedEvent,
     ReferrerSet as ReferrerSetEvent,
-    SuccessorApproved as SuccessorApprovedEvent,
-    SuccessorRejected as SuccessorRejectedEvent,
-    SuccessorRequested as SuccessorRequestedEvent,
     FeeChanged as FeeChangedEvent,
 } from "../generated/userregistry/userregistry"
 
@@ -25,8 +21,6 @@ import
 {
     System,
     Partner,
-    DID,
-    SuccessorRequest,
     AffiliateAction,
 } from "../generated/schema"
 
@@ -43,13 +37,15 @@ import
 export function handleFeeChanged(event: FeeChangedEvent): void
 {
     const s = loadSystem("nftprotect");
-    if(event.params.level == 0)
+    if(event.params.feeType == 0)
     {
-        s.feeBasic = event.params.feeWei;
+        s.feeEntry = event.params.feeWei;
     }
-    else
+    else if(event.params.feeType == 1)
     {
-        s.feeUltra = event.params.feeWei;
+        s.feeOpenCase = event.params.feeWei;
+    } else {
+        s.feeFetchRuling = event.params.feeWei;
     }
     s.save();
 }
@@ -80,19 +76,9 @@ export function handleAffiliatePercentChanged(event: AffiliatePercentChangedEven
 
 export function handleArbitratorRegistryChanged(event: ArbitratorRegistryChangedEvent): void
 {
-    // do nothing
-}
-
-export function handleDIDRegistered(event: DIDRegisteredEvent): void
-{
-    let d = new DID(event.params.did.toHex().toString());
-    d.provider = event.params.provider;
-    d.save();
-}
-
-export function handleDIDUnregistered(event: DIDUnregisteredEvent): void
-{
-    store.remove("DID", event.params.did.toHex().toString());
+    const system = loadSystem("userregistry");
+    system.arbitratorregistry = event.params.areg;
+    system.save();
 }
 
 export function handleDeployed(event: DeployedEvent): void
@@ -110,16 +96,26 @@ export function handlePartnerSet(event: PartnerSetEvent): void
     let p = new Partner(event.params.partner.toHex().toString());
     p.discount = event.params.discount;
     p.affiliatePercent = event.params.affiliatePercent;
+    p.totalProtected = BigInt.fromI32(0);
     p.save();
+}
+
+export function handlePartnerDeleted(event: PartnerDeletedEvent): void
+{
+    let id = event.params.partner.toHex().toString();
+    let p = Partner.load(id);
+    store.remove('Partner', id);
 }
 
 export function handleReferrerSet(event: ReferrerSetEvent): void
 {
     let u = loadUser(event.params.user);
-    u.referrer = event.params.referrer;
+    let referrer = loadUser(event.params.referrer);
+    if (event.params.referrer) {
+        u.referrer = referrer.id;
+    }
     u.save();
     // Add referral to referrer
-    let referrer = loadUser(event.params.referrer);
     referrer.totalReferrals = referrer.totalReferrals.plus(BigInt.fromI32(1));
     referrer.save();
     // Add AffiliateAction    
@@ -133,37 +129,4 @@ export function handleReferrerSet(event: ReferrerSetEvent): void
     action.blocknumber = event.block.number;
     action.txHash = event.transaction.hash;
     action.save();
-}
-
-export function handleSuccessorApproved(event: SuccessorApprovedEvent): void
-{
-    let r = SuccessorRequest.load(event.params.requestId.toString()) as SuccessorRequest;
-    r.status = "Accepted";
-    r.timestampChange = event.block.timestamp;
-    r.blocknumberChange = event.block.number;
-    r.save();
-
-    let u = loadUser(r.user);
-    u.successor = r.successor;
-    u.save();
-}
-
-export function handleSuccessorRejected(event: SuccessorRejectedEvent): void
-{
-    let r = SuccessorRequest.load(event.params.requestId.toString()) as SuccessorRequest;
-    r.status = "Rejected";
-    r.timestampChange = event.block.timestamp;
-    r.blocknumberChange = event.block.number;
-    r.save();
-}
-
-export function handleSuccessorRequested(event: SuccessorRequestedEvent): void
-{
-    let r = new SuccessorRequest(event.params.requestId.toString());
-    r.user = event.params.user;
-    r.successor = event.params.successor;
-    r.status = "InDispute";
-    r.timestamp = event.block.timestamp;
-    r.blocknumber = event.block.number;
-    r.save();
 }

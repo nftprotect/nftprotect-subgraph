@@ -17,21 +17,21 @@ dataSources:
         - Approval
         - ApprovalForAll
         - ArbitratorRegistryChanged
+        - AllowThirdPartyTransfersChanged
         - BaseChanged
-        - BurnArbitrateAsked
         - BurnOnActionChanged
         - Deployed
         - MetaEvidenceLoaderChanged
+        - MetaEvidenceSet
+        - SignatureVerifierChanged
         - OwnershipAdjusted
         - OwnershipAdjustmentAnswered
         - OwnershipAdjustmentArbitrateAsked
         - OwnershipAdjustmentAsked
         - OwnershipRestoreAnswered
         - OwnershipRestoreAsked
-        - BurnAnswered
         - OwnershipTransferred
         - Protected
-        - ScoreThresholdChanged
         - Transfer
         - Unprotected
         - UserRegistryChanged
@@ -45,10 +45,10 @@ dataSources:
           handler: handleApprovalForAll
         - event: ArbitratorRegistryChanged(address)
           handler: handleArbitratorRegistryChanged
+        - event: AllowThirdPartyTransfersChanged(bool)
+          handler: handleAllowThirdPartyTransfersChanged
         - event: BaseChanged(string)
           handler: handleBaseChanged
-        - event: BurnArbitrateAsked(indexed uint256,address,indexed uint256)
-          handler: handleBurnArbitrateAsked
         - event: BurnOnActionChanged(bool)
           handler: handleBurnOnActionChanged
         - event: Deployed()
@@ -70,54 +70,22 @@ dataSources:
         - event: OwnershipRestoreAsked(indexed uint256,indexed address,indexed
             address,uint256)
           handler: handleOwnershipRestoreAsked
-        - event: BurnAnswered(indexed uint256,bool)
-          handler: handleBurnAnswered
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: Protected(indexed uint256,indexed address,address,uint256,indexed
-            uint256,uint256,uint8)
+        - event: Protected(indexed uint256,address,indexed address,address,uint256,indexed
+            uint256,uint256)
           handler: handleProtected
-        - event: ScoreThresholdChanged(uint256)
-          handler: handleScoreThresholdChanged
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
         - event: Unprotected(indexed address,indexed uint256)
           handler: handleUnprotected
         - event: UserRegistryChanged(address)
           handler: handleUserRegistryChanged
+        - event: SignatureVerifierChanged(address)
+          handler: handleSignatureVerifierChanged
+        - event: MetaEvidenceSet(indexed uint8,string)
+          handler: handleMetaEvidenceSet
       file: ./src/nftprotect.ts
-  - kind: ethereum
-    name: nftpcoupons
-    network: sepolia
-    source:
-      abi: nftpcoupons
-      address: "0x8f1cb013426f591220c51c516ac185a21405afa8"
-      startBlock: 5250205
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - nftpcouponsApproval
-        - nftpcouponsDeployed
-        - nftpcouponsOwnershipTransferred
-        - nftpcouponsTransfer
-        - TransferrableSet
-      abis:
-        - name: nftpcoupons
-          file: ./abis/nftpcoupons.json
-      eventHandlers:
-        - event: Approval(indexed address,indexed address,uint256)
-          handler: handleApproval
-        - event: Deployed()
-          handler: handleDeployed
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-        - event: TransferrableSet(bool)
-          handler: handleTransferrableSet
-      file: ./src/nftpcoupons.ts
   - kind: ethereum
     name: userregistry
     network: sepolia
@@ -133,16 +101,12 @@ dataSources:
         - AffiliatePayment
         - AffiliatePercentChanged
         - userregistryArbitratorRegistryChanged
-        - DIDRegistered
-        - DIDUnregistered
         - FeeChanged
         - userregistryDeployed
         - userregistryOwnershipTransferred
         - PartnerSet
+        - PartnerDeleted
         - ReferrerSet
-        - SuccessorApproved
-        - SuccessorRejected
-        - SuccessorRequested
       abis:
         - name: userregistry
           file: ./abis/userregistry.json
@@ -153,24 +117,16 @@ dataSources:
           handler: handleAffiliatePercentChanged
         - event: ArbitratorRegistryChanged(address)
           handler: handleArbitratorRegistryChanged
-        - event: DIDRegistered(indexed address,string)
-          handler: handleDIDRegistered
-        - event: DIDUnregistered(indexed address)
-          handler: handleDIDUnregistered
         - event: Deployed()
           handler: handleDeployed
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: PartnerSet(indexed address,uint8,uint8)
           handler: handlePartnerSet
+        - event: PartnerDeleted(indexed address)
+          handler: handlePartnerDeleted
         - event: ReferrerSet(indexed address,indexed address)
           handler: handleReferrerSet
-        - event: SuccessorApproved(indexed uint256)
-          handler: handleSuccessorApproved
-        - event: SuccessorRejected(indexed uint256)
-          handler: handleSuccessorRejected
-        - event: SuccessorRequested(indexed uint256,indexed address,indexed address)
-          handler: handleSuccessorRequested
         - event: FeeChanged(indexed uint8,uint256)
           handler: handleFeeChanged
       file: ./src/userregistry.ts
