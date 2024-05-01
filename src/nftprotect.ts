@@ -103,6 +103,7 @@ export function handleOwnershipAdjusted(event: OwnershipAdjustedEvent): void
 {
     let t = Token.load(event.params.tokenId.toString()) as Token;
     t.ownerOriginal = loadUser(event.params.newowner).id;
+    t.nonce = t.nonce.plus(BigInt.fromI32(1));
     t.save();
 }
 
@@ -110,6 +111,11 @@ export function handleOwnershipAdjustmentAnswered(event: OwnershipAdjustmentAnsw
 {
     let r = Request.load(event.params.requestId.toString()) as Request;
     r.status = event.params.accept ? "Accepted" : "Rejected";
+    if (event.params.accept) {
+        let t = Token.load(r.token) as Token;
+        t.nonce = t.nonce.plus(BigInt.fromI32(1));
+        t.save();
+    }
     r.timestampChange = event.block.timestamp;
     r.blocknumberChange = event.block.number;
     r.save();
@@ -222,6 +228,7 @@ export function handleProtected(event: ProtectedEvent): void {
     t.amount = event.params.amount;
     t.timestamp = event.block.timestamp;
     t.blocknumber = event.block.number;
+    t.nonce = t.nonce.plus(BigInt.fromI32(0));
     t.save();
 
     // Update totalOwnedProtected for the owner
