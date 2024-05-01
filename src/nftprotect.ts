@@ -281,6 +281,12 @@ export function handleSignatureVerifierChanged(event: SignatureVerifierChangedEv
     s.save();
 }
 
+export function handleAllowThirdPartyTransfersChanged(event: AllowThirdPartyTransfersChangedEvent): void {
+    const s = loadSystem("nftprotect");
+    s.allowThirdPartyTransfers = event.params.allowed;
+    s.save();
+}
+
 export function handleMetaEvidenceSet(event: MetaEvidenceSetEvent): void {
     let metaEvidence = new MetaEvidence(event.params.evidenceType.toString() + "-" + event.transaction.hash.toHex());
     metaEvidence.evidenceType = event.params.evidenceType;

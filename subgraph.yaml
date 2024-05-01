@@ -7,8 +7,8 @@ dataSources:
     network: sepolia
     source:
       abi: nftprotect
-      address: "0xe7807e973f42aea32da71c15a6441760f675d9cc"
-      startBlock: 5250204
+      address: "0x954edfce24448c3500b635b05dfcc051ca69d4de"
+      startBlock: 5766604
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -91,8 +91,8 @@ dataSources:
     network: sepolia
     source:
       abi: userregistry
-      address: "0x727718859965b1c88c79491721d9b861654f6a73"
-      startBlock: 5250206
+      address: "0x8a3b109da314dde8eee77e7cb5be6e0922126ec2"
+      startBlock: 5766605
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -135,8 +135,8 @@ dataSources:
     network: sepolia
     source:
       abi: arbitratorregistry
-      address: "0xa8d82ab740b0ba1a1b5784b86ecdc41d53e4ff15"
-      startBlock: 5250202
+      address: "0x25bf41c8f7ea92091260c9e50bb44566a0719bd7"
+      startBlock: 5563678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
