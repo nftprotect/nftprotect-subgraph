@@ -235,6 +235,7 @@ export function handleProtected(event: ProtectedEvent): void {
     let owner = User.load(ownerId);
     if (owner) {
         owner.totalOwnedProtected = owner.totalOwnedProtected.plus(BigInt.fromI32(1));
+        owner.totalProtected = owner.totalProtected.plus(BigInt.fromI32(1))
         owner.save();
     }
 }
