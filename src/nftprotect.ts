@@ -228,7 +228,7 @@ export function handleProtected(event: ProtectedEvent): void {
     t.amount = event.params.amount;
     t.timestamp = event.block.timestamp;
     t.blocknumber = event.block.number;
-    t.nonce = t.nonce.plus(BigInt.fromI32(0));
+    t.nonce = BigInt.fromI32(0);
     t.save();
 
     // Update totalOwnedProtected for the owner
