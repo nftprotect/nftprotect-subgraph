@@ -300,6 +300,12 @@
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum NFTProtect.MetaEvidenceType",
+        "name": "metaEvidenceType",
+        "type": "uint8"
       }
     ],
     "name": "OwnershipRestoreAsked",

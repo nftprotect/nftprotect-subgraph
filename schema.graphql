@@ -98,6 +98,7 @@ type Request @entity
     token: Token!
     oldowner: User
     newowner: User
+    metaEvidenceId: Int!
     timestamp: BigInt!
     blocknumber: BigInt!
     timestampChange: BigInt

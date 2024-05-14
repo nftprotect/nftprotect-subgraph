@@ -111,14 +111,12 @@ export function handleOwnershipAdjustmentAnswered(event: OwnershipAdjustmentAnsw
 {
     let r = Request.load(event.params.requestId.toString()) as Request;
     r.status = event.params.accept ? "Accepted" : "Rejected";
-    if (event.params.accept) {
-        let t = Token.load(r.token) as Token;
-        t.nonce = t.nonce.plus(BigInt.fromI32(1));
-        t.save();
-    }
     r.timestampChange = event.block.timestamp;
     r.blocknumberChange = event.block.number;
     r.save();
+    let t = Token.load(r.token) as Token;
+    t.nonce = t.nonce.plus(BigInt.fromI32(1));
+    t.save();
 }
 
 export function handleOwnershipAdjustmentArbitrateAsked(event: OwnershipAdjustmentArbitrateAskedEvent): void
@@ -163,6 +161,7 @@ export function handleOwnershipAdjustmentAsked(event: OwnershipAdjustmentAskedEv
     r.token = tokenId;
     r.newowner = loadUser(event.params.newowner).id;
     r.oldowner = loadUser(event.params.oldowner).id;
+    r.metaEvidenceId = 0; // It's always 0 for ownershipAdjustment
     r.timestamp = event.block.timestamp;
     r.blocknumber = event.block.number;
     r.save();
@@ -182,12 +181,14 @@ export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEv
     r.timestampChange = event.block.timestamp;
     r.blocknumberChange = event.block.number;
     r.save();
+    let t = Token.load(r.token) as Token;
+    t.nonce = t.nonce.plus(BigInt.fromI32(1));
     if(event.params.accept)
     {
-        let t = Token.load(r.token) as Token;
         t.ownerProtected = r.newowner as string;
-        t.save();
     }
+    t.save();
+
 }
 
 export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): void
@@ -199,6 +200,7 @@ export function handleOwnershipRestoreAsked(event: OwnershipRestoreAskedEvent): 
     r.token = tokenId;
     r.newowner = loadUser(event.params.newowner).id;
     r.oldowner = loadUser(event.params.oldowner).id;
+    r.metaEvidenceId = event.params.metaEvidenceType;
     r.timestamp = event.block.timestamp;
     r.blocknumber = event.block.number;
     r.save();
