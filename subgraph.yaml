@@ -7,8 +7,8 @@ dataSources:
     network: sepolia
     source:
       abi: nftprotect
-      address: "0x2227b944f06304c0f6b42ae18067af6dee148573"
-      startBlock: 5899537
+      address: "0x35be7e7dedc7ae13bd80ec8d26cf80ab2f7f0934"
+      startBlock: 5999414
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -57,15 +57,17 @@ dataSources:
           handler: handleMetaEvidenceLoaderChanged
         - event: OwnershipAdjusted(indexed address,indexed address,indexed uint256)
           handler: handleOwnershipAdjusted
-        - event: OwnershipAdjustmentAnswered(indexed uint256,bool)
+        - event: OwnershipAdjustmentAnswered(indexed uint256,indexed address,indexed
+            address,bool)
           handler: handleOwnershipAdjustmentAnswered
-        - event: OwnershipAdjustmentArbitrateAsked(indexed uint256,address,indexed
-            uint256)
+        - event: OwnershipAdjustmentArbitrateAsked(indexed uint256,indexed address,indexed
+            address,uint256)
           handler: handleOwnershipAdjustmentArbitrateAsked
         - event: OwnershipAdjustmentAsked(indexed uint256,indexed address,indexed
             address,uint256)
           handler: handleOwnershipAdjustmentAsked
-        - event: OwnershipRestoreAnswered(indexed uint256,bool)
+        - event: OwnershipRestoreAnswered(indexed uint256,indexed address,indexed
+            address,bool)
           handler: handleOwnershipRestoreAnswered
         - event: OwnershipRestoreAsked(indexed uint256,indexed address,indexed
             address,uint256,uint8)
@@ -91,8 +93,8 @@ dataSources:
     network: sepolia
     source:
       abi: userregistry
-      address: "0xc4f9fc0f8fe6a2dc9f66b387be0c741750f196cf"
-      startBlock: 5899539
+      address: "0x6307453103337b65636b221b4404d302539c99d5"
+      startBlock: 5999415
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

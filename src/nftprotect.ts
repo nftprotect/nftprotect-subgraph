@@ -115,6 +115,7 @@ export function handleOwnershipAdjustmentAnswered(event: OwnershipAdjustmentAnsw
     r.blocknumberChange = event.block.number;
     r.save();
     let t = Token.load(r.token) as Token;
+    t.ownerOriginal = event.params.newowner.toString();
     t.nonce = t.nonce.plus(BigInt.fromI32(1));
     t.save();
 }
@@ -128,8 +129,8 @@ export function handleOwnershipAdjustmentArbitrateAsked(event: OwnershipAdjustme
         r.type = "OwnershipAdjustment";
         let tokenId = event.params.tokenId.toString();
         r.token = tokenId;
-        r.newowner = loadUser(event.params.dst).id;
-        r.oldowner = (Token.load(event.params.tokenId.toString()) as Token).ownerOriginal;
+        r.newowner = loadUser(event.params.newowner).id;
+        r.oldowner = event.params.oldowner.toString();
         r.timestamp = event.block.timestamp;
         r.blocknumber = event.block.number;
         r.status = "Disputed";
@@ -182,6 +183,7 @@ export function handleOwnershipRestoreAnswered(event: OwnershipRestoreAnsweredEv
     r.blocknumberChange = event.block.number;
     r.save();
     let t = Token.load(r.token) as Token;
+    t.ownerProtected = event.params.newowner.toString(); // Also handled by transfer
     t.nonce = t.nonce.plus(BigInt.fromI32(1));
     if(event.params.accept)
     {
