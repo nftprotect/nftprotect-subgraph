@@ -1,16 +1,16 @@
 {
   "sepolia": {
     "nftprotect": {
-      "address": "0x35be7e7dedc7ae13bd80ec8d26cf80ab2f7f0934",
-      "startBlock": 5999414
+      "address": "0x27b6e64bf6faec53141f2a2cd2da55dc1dffa5ba",
+      "startBlock": 6012084
     },
     "arbitratorregistry": {
-      "address": "0x25bf41c8f7ea92091260c9e50bb44566a0719bd7",
-      "startBlock": 5563678
+      "address": "0xb8ef2a8ca0be3f5d734446cd6a13f56372a56e2b",
+      "startBlock": 6012073
     },
     "userregistry": {
-      "address": "0x6307453103337b65636b221b4404d302539c99d5",
-      "startBlock": 5999415
+      "address": "0xf557231b2e3b088e9b8cb1072c0ce03898975c6a",
+      "startBlock": 6012085
     }
   }
 }
